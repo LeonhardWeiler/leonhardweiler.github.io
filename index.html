@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Meine GitHub Pages Projekte</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; background: #f9f9f9; }
+    h1 { text-align: center; margin-bottom: 30px; }
+
+    #projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .project {
+      display: block;
+      text-decoration: none;
+      color: black;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .project:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .project img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .project .info {
+      padding: 10px;
+    }
+    .project .name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .project .desc {
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Meine GitHub Pages Projekte</h1>
+  <div id="projects">Lade Projekte...</div>
+
+  <script>
+    const username = "leonhardweiler"; // GitHub Username
+    const projectsContainer = document.getElementById("projects");
+
+    // Prüft, ob die GitHub Pages URL existiert
+    async function pageExists(url) {
+      try {
+        const res = await fetch(url, { method: "HEAD" });
+        return res.ok;
+      } catch {
+        return false;
+      }
+    }
+
+    async function fetchPagesRepos() {
+      try {
+        const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+        const repos = await res.json();
+        projectsContainer.textContent = "";
+
+        for (const repo of repos) {
+          if (repo.name === `${username}.github.io`) continue; // Hauptseite ausblenden
+
+          const url = `https://${username}.github.io/${repo.name}/`;
+          if (await pageExists(url)) {
+            const link = document.createElement("a");
+            link.href = url;
+            link.className = "project";
+            link.innerHTML = `
+              <img src="https://opengraph.githubassets.com/1/${username}/${repo.name}" alt="${repo.name}">
+              <div class="info">
+                <div class="name">${repo.name}</div>
+                <div class="desc">${repo.description || "Keine Beschreibung"}</div>
+              </div>
+            `;
+            projectsContainer.appendChild(link);
+          }
+        }
+
+        if (projectsContainer.children.length === 0) {
+          projectsContainer.textContent = "Keine aktiven GitHub Pages-Projekte gefunden.";
+        }
+      } catch (err) {
+        console.error(err);
+        projectsContainer.textContent = "Fehler beim Laden der Projekte.";
+      }
+    }
+
+    fetchPagesRepos();
+  </script>
+</body>
+</html>
+

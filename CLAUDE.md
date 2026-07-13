@@ -11,12 +11,12 @@ GitHub Pages site, and renders them as a grid of cards.
 
 ## Structure
 
-- `index.html` — the entire site. Markup, CSS, and JavaScript live inline in this
+- `index.html`: the entire site. Markup, CSS, and JavaScript live inline in this
   one file. There is no build step and there are no dependencies.
-- `LICENSE` — GNU General Public License v3 text.
-- `README.md` — project description for humans.
-- `CHANGELOG.md` — release history following the Keep a Changelog format.
-- `AGENT/` — working files for automated agents (TODO list, reports). Not part of
+- `LICENSE`: GNU General Public License v3 text.
+- `README.md`: project description for humans.
+- `CHANGELOG.md`: release history following the Keep a Changelog format.
+- `AGENT/`: working files for automated agents (TODO list, reports). Not part of
   the published site.
 
 ## How it works

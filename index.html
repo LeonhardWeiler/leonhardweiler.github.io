@@ -130,13 +130,27 @@ function renderProjects(projects) {
     const link = document.createElement("a");
     link.href = proj.url;
     link.className = "project";
-    link.innerHTML = `
-<img src="${proj.img}" alt="${proj.name}">
-<div class="info">
-  <div class="name">${proj.name}</div>
-  <div class="desc">${proj.desc}</div>
-</div>
-`;
+
+    // Repository names and descriptions come from the GitHub API and are
+    // untrusted, so build the card with the DOM API and set text content
+    // rather than interpolating into innerHTML.
+    const img = document.createElement("img");
+    img.src = proj.img;
+    img.alt = proj.name;
+
+    const info = document.createElement("div");
+    info.className = "info";
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = proj.name;
+
+    const desc = document.createElement("div");
+    desc.className = "desc";
+    desc.textContent = proj.desc;
+
+    info.append(name, desc);
+    link.append(img, info);
     projectsContainer.appendChild(link);
   }
 }

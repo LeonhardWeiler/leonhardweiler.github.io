@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Meine Projekte</title>
+    <title>My Projects</title>
     <style>
     :root {
     --bg: #f9f9f9;
@@ -72,8 +72,8 @@
     </style>
   </head>
   <body>
-    <h1>Meine Projekte</h1>
-    <div id="projects">Lade Projekte...</div>
+    <h1>My Projects</h1>
+    <div id="projects">Loading projects...</div>
 
     <script>
 const username = "leonhardweiler";
@@ -100,7 +100,7 @@ async function fetchPagesRepos() {
       if (await pageExists(url)) {
         return {
           name: repo.name,
-          desc: repo.description || "Keine Beschreibung",
+          desc: repo.description || "No description",
           url: url,
           img: `https://opengraph.githubassets.com/1/${username}/${repo.name}`
         };
@@ -122,7 +122,7 @@ async function fetchPagesRepos() {
 function renderProjects(projects) {
   projectsContainer.textContent = "";
   if (projects.length === 0) {
-    projectsContainer.textContent = "Keine aktiven GitHub Pages-Projekte gefunden.";
+    projectsContainer.textContent = "No active GitHub Pages projects found.";
     return;
   }
 
@@ -151,7 +151,7 @@ function renderProjects(projects) {
   if (projects.length > 0) {
     renderProjects(projects);
   } else if (!cached) {
-    projectsContainer.textContent = "Keine aktiven GitHub Pages-Projekte gefunden.";
+    projectsContainer.textContent = "No active GitHub Pages projects found.";
   }
 })();
     </script>

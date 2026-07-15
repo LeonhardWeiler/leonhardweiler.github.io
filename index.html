@@ -100,7 +100,9 @@
 
               const age = document.createElement("td");
               age.className = "age";
-              age.textContent = repo.pushed_at ? repo.pushed_at.slice(0, 10) : "";
+              age.textContent = repo.pushed_at
+                ? repo.pushed_at.slice(0, 10)
+                : "";
 
               const tr = document.createElement("tr");
               tr.append(name, desc, age);

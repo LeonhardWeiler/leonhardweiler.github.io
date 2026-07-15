@@ -1,12 +1,6 @@
-# leonhardweiler.github.io
-
-Personal landing page listing my live GitHub Pages projects as links.
-
-## License
-
 ISC License
 
-Copyright (c) 2026 Leonhard Weiler
+Copyright (c) 2026 The leonhardweiler.github.io Authors
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above

@@ -312,20 +312,20 @@
           <span class="num">0</span><span class="lbl">Medium</span>
         </div>
         <div class="counter">
-          <span class="num">3</span><span class="lbl">Low</span>
+          <span class="num">0</span><span class="lbl">Low</span>
         </div>
         <div class="counter">
-          <span class="num">1</span><span class="lbl">Info</span>
+          <span class="num">0</span><span class="lbl">Info</span>
         </div>
         <div class="counter">
-          <span class="num">4</span><span class="lbl">Open total</span>
+          <span class="num">0</span><span class="lbl">Open total</span>
         </div>
       </section>
 
       <nav class="toc">
         <h3>Contents</h3>
         <ol>
-          <li><a href="#open">Open findings</a> (4)</li>
+          <li><a href="#open">Open findings</a> (0)</li>
           <li><a href="#strong">What is already strong</a></li>
           <li><a href="#decided">Deliberately decided</a></li>
         </ol>
@@ -333,139 +333,67 @@
 
       <h2 id="open"><span class="n">1.</span> Open findings</h2>
 
-      <article class="card low" id="UX-1">
-        <div class="card-head">
-          <span class="id">UX-1</span>
-          <span class="badge low">low</span>
-          <span class="loc">index.html:26&ndash;39</span>
-        </div>
-        <p>
-          <strong>No failure feedback; the fetch has no
-            <code>catch</code>.</strong>
-          Two failure modes leave the visitor without any signal. A network/DNS
-          error (or a failed <code>res.json()</code>) rejects the promise chain,
-          so the initial &ldquo;Loading&hellip;&rdquo; text stays on screen
-          forever. A rate-limited response (the unauthenticated GitHub API
-          allows only ~60 requests/hour per IP) returns a JSON <em>object</em>,
-          not an array; <code>list.textContent</code> is cleared first and then
-          <code>for (const repo of repos)</code> throws an unhandled
-          <code>TypeError</code>, leaving a blank list plus a console error.
-        </p>
-        <p class="rec">
-          <strong>Recommendation:</strong> add a <code>.catch</code> (and an
-          <code>Array.isArray(repos)</code> guard) that replaces the list text
-          with a short &ldquo;couldn&rsquo;t load projects&rdquo; message &mdash;
-          one line that turns both silent failures into honest feedback.
-        </p>
-      </article>
-
-      <article class="card low" id="UX-2">
-        <div class="card-head">
-          <span class="id">UX-2</span>
-          <span class="badge low">low</span>
-          <span class="loc">index.html:29&ndash;38</span>
-        </div>
-        <p>
-          <strong>Empty result renders a blank page.</strong> When no repo has
-          <code>has_pages</code> set, the loop appends nothing after
-          <code>list.textContent</code> is cleared, so the visitor is left with
-          just the heading and an empty list &mdash; no &ldquo;no projects&rdquo;
-          message. (Not triggered today: the account has four live Pages sites.)
-        </p>
-        <p class="rec">
-          <strong>Recommendation:</strong> after the loop, if the list is still
-          empty, append a single fallback line such as &ldquo;No projects
-          yet.&rdquo;
-        </p>
-      </article>
-
-      <article class="card low" id="A11Y-1">
-        <div class="card-head">
-          <span class="id">A11Y-1</span>
-          <span class="badge low">low</span>
-          <span class="loc">index.html:18</span>
-        </div>
-        <p>
-          <strong>Async list update is not announced.</strong> The
-          <code>&lt;ul id="projects"&gt;</code> starts as
-          &ldquo;Loading&hellip;&rdquo; and is populated later, but it carries no
-          <code>aria-live</code>, so a screen-reader user who has already focused
-          the region is not told when the links appear. (The links remain
-          reachable by normal navigation afterward.)
-        </p>
-        <p class="rec">
-          <strong>Recommendation:</strong> add <code>aria-live="polite"</code>
-          to the list &mdash; a single attribute, no code cost.
-        </p>
-      </article>
-
-      <article class="card info" id="DOC-1">
-        <div class="card-head">
-          <span class="id">DOC-1</span>
-          <span class="badge info">info</span>
-          <span class="loc">CLAUDE.md &middot; Conventions</span>
-        </div>
-        <p>
-          <strong>Convention references a field that is no longer
-            rendered.</strong>
-          The <code>textContent</code>-not-<code>innerHTML</code> convention is
-          still correct and followed, but it is phrased around repository
-          <em>descriptions</em>, which the minimal page no longer displays. The
-          untrusted value now inserted into the DOM is the repository
-          <em>name</em>.
-        </p>
-        <p class="rec">
-          <strong>Recommendation:</strong> reword the convention to speak of
-          untrusted GitHub API data / repository names (fix via
-          <code>create-claude-md</code> or a small manual edit).
-        </p>
-      </article>
+      <p>
+        No open findings. The site was reworked into a git.suckless.org-style
+        table (Name / Description / Last commit, sorted alphabetically), and the
+        four findings from the previous snapshot were resolved in the process:
+        the fetch now has a <code>.catch</code> and an
+        <code>Array.isArray</code> guard, the empty result renders a message
+        row, the table body is <code>aria-live</code>, and the
+        <code>CLAUDE.md</code> convention was reworded.
+      </p>
 
       <h2 id="strong"><span class="n">2.</span> What is already strong</h2>
       <ul class="plain">
         <li>
-          <strong>Does one thing.</strong> Fetch the repos, keep the ones with
-          <code>has_pages</code>, list them as links. No caching, images,
-          theming or error UI to go wrong &mdash; the whole script is a dozen
-          lines.
+          <strong>Does one thing.</strong> Fetch the public repos, sort them,
+          render a three-column table &mdash; the whole script is a couple dozen
+          lines with no dependencies and no build step.
         </li>
         <li>
-          <strong>Single-request data flow.</strong> One call to the repos API,
-          filtered by the <code>has_pages</code> flag &mdash; no per-repo
-          <code>HEAD</code> probes, so there is no fan-out to fail.
+          <strong>Honest states.</strong> A single <code>fetch</code> with a
+          <code>.catch</code>, an <code>Array.isArray</code> guard, and an
+          empty-result branch: network errors, a rate-limited (non-array)
+          response, and &ldquo;no repositories&rdquo; each render a clear message
+          row instead of a stuck or blank page.
         </li>
         <li>
-          <strong>HTML-injection safe rendering.</strong> The untrusted repo
-          name is inserted via <code>textContent</code> and DOM APIs, never
-          <code>innerHTML</code> &mdash; matching the documented convention.
+          <strong>HTML-injection safe rendering.</strong> Untrusted repo names
+          and descriptions are inserted via <code>textContent</code> and DOM
+          APIs, never <code>innerHTML</code> &mdash; matching the documented
+          convention.
         </li>
         <li>
-          <strong>Defensive headers.</strong> A tight Content-Security-Policy
-          (<code>default-src 'none'</code>) locks sources down to the API and a
-          <code>data:</code> favicon; <code>lang="en"</code> and a viewport meta
-          are set.
+          <strong>Defensive headers &amp; a11y.</strong> A tight
+          Content-Security-Policy (<code>default-src 'none'</code>) locks sources
+          down to the API and a <code>data:</code> favicon;
+          <code>lang="en"</code>, a viewport meta, and an <code>aria-live</code>
+          table body are set.
         </li>
         <li>
-          <strong>Zero dependencies, no build step, no comments.</strong> One
-          self-contained <code>index.html</code> of short, clearly named code
-          that reads on its own.
+          <strong>Self-explanatory code.</strong> Short, clearly named code with
+          no comments, contained in one <code>index.html</code>.
         </li>
       </ul>
 
       <h2 id="decided"><span class="n">3.</span> Deliberately decided</h2>
       <ul class="plain">
         <li>
-          <strong>No caching, no styling, no error UI.</strong> Removed on
-          purpose to keep the page truly minimal; browser default styling is
-          accepted. The one caveat is the failure state this leaves behind
-          &mdash; see UX-1.
+          <strong>Full repo index, name links to the repo.</strong> All public
+          repos are listed (including forks/archived), each linking to its
+          GitHub <code>html_url</code> &mdash; a deliberate switch from the
+          earlier Pages-only view, matching the git.suckless.org model.
         </li>
         <li>
-          <strong><code>has_pages</code> instead of live probing.</strong> The
-          list trusts the API&rsquo;s <code>has_pages</code> flag rather than
-          fetching each candidate URL. A repo with Pages enabled but a failed
-          build could still be listed &mdash; an accepted trade-off for the
-          simpler, single request.
+          <strong><code>pushed_at</code> as &ldquo;last commit.&rdquo;</strong>
+          The date column uses the API&rsquo;s <code>pushed_at</code> field
+          (last push) rather than fetching each repo&rsquo;s commit list &mdash;
+          effectively the last commit, for one cheap request.
+        </li>
+        <li>
+          <strong>Minimal gray/white/black styling.</strong> A compact monospace
+          table in the git.suckless.org spirit; like that site it is not
+          specially optimized for narrow screens, which is accepted.
         </li>
         <li>
           <strong>No pagination.</strong> <code>per_page=100</code> covers a
@@ -475,7 +403,7 @@
         <li>
           <strong>Unauthenticated GitHub API.</strong> A public static page
           cannot embed a secret token, so the low anonymous rate limit is an
-          accepted trade-off.
+          accepted trade-off; hitting it now shows a clear message.
         </li>
         <li>
           <strong>No framework / toolchain / tests.</strong> For a single static

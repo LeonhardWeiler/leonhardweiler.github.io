@@ -5,38 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; img-src data:; script-src 'unsafe-inline'; connect-src https://api.github.com"
+      content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://api.github.com"
     />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='7' fill='%23303443'/></svg>"
     />
-    <title>My Projects</title>
+    <title>Repositories</title>
+    <style>
+      body {
+        font-family: monospace;
+        color: #000;
+        background: #fff;
+        margin: 0;
+        padding: 1em;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 0.15em 1.5em 0.15em 0;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+      thead th {
+        border-bottom: 1px solid #999;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      td.desc {
+        white-space: normal;
+        color: #555;
+      }
+      td.age {
+        color: #555;
+      }
+    </style>
   </head>
   <body>
-    <h1>My Projects</h1>
-    <ul id="projects">
-      <li>Loading…</li>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Last commit</th>
+        </tr>
+      </thead>
+      <tbody id="repos" aria-live="polite">
+        <tr><td colspan="3">Loading…</td></tr>
+      </tbody>
+    </table>
 
     <script>
       const user = "leonhardweiler";
-      const list = document.getElementById("projects");
+      const tbody = document.getElementById("repos");
+
+      function note(text) {
+        const td = document.createElement("td");
+        td.colSpan = 3;
+        td.textContent = text;
+        const tr = document.createElement("tr");
+        tr.append(td);
+        tbody.replaceChildren(tr);
+      }
 
       fetch(`https://api.github.com/users/${user}/repos?per_page=100`)
         .then((res) => res.json())
         .then((repos) => {
-          list.textContent = "";
-          for (const repo of repos) {
-            if (!repo.has_pages || repo.name === `${user}.github.io`) continue;
-            const a = document.createElement("a");
-            a.href = `https://${user}.github.io/${repo.name}/`;
-            a.textContent = repo.name;
-            const li = document.createElement("li");
-            li.append(a);
-            list.append(li);
-          }
-        });
+          if (!Array.isArray(repos)) throw new Error();
+          if (repos.length === 0) return note("No repositories.");
+          repos.sort((a, b) => a.name.localeCompare(b.name));
+          tbody.replaceChildren(
+            ...repos.map((repo) => {
+              const link = document.createElement("a");
+              link.href = repo.html_url;
+              link.textContent = repo.name;
+
+              const name = document.createElement("td");
+              name.append(link);
+
+              const desc = document.createElement("td");
+              desc.className = "desc";
+              desc.textContent = repo.description || "";
+
+              const age = document.createElement("td");
+              age.className = "age";
+              age.textContent = repo.pushed_at ? repo.pushed_at.slice(0, 10) : "";
+
+              const tr = document.createElement("tr");
+              tr.append(name, desc, age);
+              return tr;
+            }),
+          );
+        })
+        .catch(() => note("Unable to load repositories."));
     </script>
   </body>
 </html>

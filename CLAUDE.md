@@ -6,14 +6,15 @@ Guidance for working in this repository.
 
 This is the personal GitHub Pages landing page served at
 `https://leonhardweiler.github.io/`. It is a single static page that queries the
-GitHub API for the user's public repositories, keeps the ones that have a live
-GitHub Pages site, and renders them as a grid of cards.
+GitHub API for the user's public repositories, keeps the ones that have GitHub
+Pages enabled, and renders them as a plain list of links.
 
 ## Structure
 
-- `index.html`: the entire site. Markup, CSS, and JavaScript live inline in this
-  one file. There is no build step and there are no dependencies.
+- `index.html`: the entire site. Markup and JavaScript live inline in this one
+  file. There is no build step and there are no dependencies.
 - `LICENSE`: ISC license text.
+- `README.md`: project description and license.
 - `AGENT/`: working files for automated agents (reports). Not part of the
   published site.
 
@@ -21,13 +22,9 @@ GitHub Pages site, and renders them as a grid of cards.
 
 On load, `index.html`:
 
-1. Reads a cached result list from `localStorage` (key `cachedPages`) and renders
-   it immediately, so returning visitors see content without waiting.
-2. Fetches `https://api.github.com/users/<username>/repos` and keeps the repos
-   whose `has_pages` flag is set, using the Pages URL convention
-   `https://<username>.github.io/<repo>/`.
-3. Renders the projects and writes the fresh list back to `localStorage`. The
-   cache is only overwritten when the API request succeeds.
+1. Fetches `https://api.github.com/users/<username>/repos` from the GitHub API.
+2. Keeps the repos whose `has_pages` flag is set and appends each one as a link
+   using the Pages URL convention `https://<username>.github.io/<repo>/`.
 
 The GitHub username is set in the `user` constant near the top of the script.
 

@@ -334,65 +334,56 @@
       <h2 id="open"><span class="n">1.</span> Open findings</h2>
 
       <p>
-        No open findings. The issues from the previous snapshot (missing
-        viewport meta, unguarded cache parse, cache poisoning from transient
-        probes, indistinguishable API errors, missing CSP, missing
-        <code>aria-live</code>, no broken-image fallback, and the SEO/favicon
-        gaps) have all been addressed in <code>index.html</code>.
+        No open findings. The site was reduced to a truly minimal form: one
+        <code>fetch</code>, a <code>has_pages</code> filter, and a plain list of
+        links. All prior findings are gone with the code that carried them.
       </p>
 
       <h2 id="strong"><span class="n">2.</span> What is already strong</h2>
       <ul class="plain">
         <li>
-          <strong>HTML-injection safe rendering.</strong> Untrusted repo names
-          and descriptions are inserted via <code>textContent</code> and DOM
-          APIs, never <code>innerHTML</code> &mdash; matching the documented
-          convention.
+          <strong>Does one thing.</strong> Fetch the repos, keep the ones with
+          <code>has_pages</code>, list them as links. No caching, images,
+          theming or error UI to go wrong &mdash; the whole script is a dozen
+          lines.
         </li>
         <li>
-          <strong>Simple, single-request data flow.</strong> One call to the
-          repos API, filtered by the <code>has_pages</code> flag &mdash; no
-          per-repo <code>HEAD</code> probes, so there is no fan-out to fail and
-          no transient-failure cache poisoning.
+          <strong>Single-request data flow.</strong> One call to the repos API,
+          filtered by the <code>has_pages</code> flag &mdash; no per-repo
+          <code>HEAD</code> probes, so there is no fan-out to fail.
         </li>
         <li>
-          <strong>Robust cache handling.</strong> The cached list is parsed
-          inside a try/catch (a corrupt entry is dropped, not fatal), rendered
-          instantly for returning visitors, and only overwritten after a
-          successful fetch. API errors surface a distinct retry message instead
-          of a misleading &ldquo;no projects&rdquo; state.
+          <strong>HTML-injection safe rendering.</strong> The untrusted repo
+          name is inserted via <code>textContent</code> and DOM APIs, never
+          <code>innerHTML</code> &mdash; matching the documented convention.
         </li>
         <li>
-          <strong>Defensive headers &amp; a11y.</strong> A tight
-          Content-Security-Policy locks down sources, <code>lang="en"</code> is
-          set, images carry <code>alt</code> text plus an <code>onerror</code>
-          fallback, and the results region is <code>aria-live</code>.
+          <strong>Defensive headers.</strong> A tight Content-Security-Policy
+          (<code>default-src 'none'</code>) locks sources down to the API and a
+          <code>data:</code> favicon; <code>lang="en"</code> and a viewport meta
+          are set.
         </li>
         <li>
-          <strong>Light/dark theming.</strong> Clean CSS-variable theming driven
-          by <code>prefers-color-scheme</code>, responsive down to narrow
-          viewports.
-        </li>
-        <li>
-          <strong>Minimal &amp; self-explanatory.</strong> The whole site is one
-          dependency-free <code>index.html</code> with no build step and no
-          comments &mdash; short, clearly named code that reads on its own.
+          <strong>Zero dependencies, no build step, no comments.</strong> One
+          self-contained <code>index.html</code> of short, clearly named code
+          that reads on its own.
         </li>
       </ul>
 
       <h2 id="decided"><span class="n">3.</span> Deliberately decided</h2>
       <ul class="plain">
         <li>
-          <strong>Everything inline in <code>index.html</code>.</strong> Markup,
-          CSS and JS live in one file by design (documented in
-          <code>CLAUDE.md</code>); not treated as a finding.
+          <strong>No caching, no styling, no error UI.</strong> Removed on
+          purpose to keep the page truly minimal. Browser default styling is
+          accepted; if the API is unreachable the page simply shows nothing to
+          list.
         </li>
         <li>
           <strong><code>has_pages</code> instead of live probing.</strong> The
           list trusts the API&rsquo;s <code>has_pages</code> flag rather than
           fetching each candidate URL. A repo with Pages enabled but a failed
           build could still be listed &mdash; an accepted trade-off for the
-          simpler, more reliable single request.
+          simpler, single request.
         </li>
         <li>
           <strong>No pagination.</strong> <code>per_page=100</code> covers a
@@ -402,7 +393,7 @@
         <li>
           <strong>Unauthenticated GitHub API.</strong> A public static page
           cannot embed a secret token, so the low anonymous rate limit is an
-          accepted trade-off; hitting it now shows a clear retry message.
+          accepted trade-off.
         </li>
         <li>
           <strong>No framework / toolchain / tests.</strong> For a single static

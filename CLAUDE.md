@@ -13,11 +13,9 @@ GitHub Pages site, and renders them as a grid of cards.
 
 - `index.html`: the entire site. Markup, CSS, and JavaScript live inline in this
   one file. There is no build step and there are no dependencies.
-- `LICENSE`: GNU General Public License v3 text.
-- `README.md`: project description for humans.
-- `CHANGELOG.md`: release history following the Keep a Changelog format.
-- `AGENT/`: working files for automated agents (TODO list, reports). Not part of
-  the published site.
+- `LICENSE`: ISC license text.
+- `AGENT/`: working files for automated agents (reports). Not part of the
+  published site.
 
 ## How it works
 
@@ -25,11 +23,13 @@ On load, `index.html`:
 
 1. Reads a cached result list from `localStorage` (key `cachedPages`) and renders
    it immediately, so returning visitors see content without waiting.
-2. Fetches `https://api.github.com/users/<username>/repos`, then sends a `HEAD`
-   request to each candidate Pages URL to check which sites are actually live.
-3. Renders the live projects and writes the fresh list back to `localStorage`.
+2. Fetches `https://api.github.com/users/<username>/repos` and keeps the repos
+   whose `has_pages` flag is set, using the Pages URL convention
+   `https://<username>.github.io/<repo>/`.
+3. Renders the projects and writes the fresh list back to `localStorage`. The
+   cache is only overwritten when the API request succeeds.
 
-The GitHub username is set in the `username` constant near the top of the script.
+The GitHub username is set in the `user` constant near the top of the script.
 
 ## Local preview
 
@@ -43,7 +43,9 @@ python3 -m http.server
 ## Conventions
 
 - Keep the site dependency-free and contained in `index.html`.
-- All user-facing text and code comments are in English.
+- Keep it minimal: solve the problem simply and let the code explain itself.
+  Prefer clear names over comments; do not add comments.
+- All user-facing text is in English.
 - Repository descriptions come from the GitHub API and are untrusted input. When
   inserting them into the DOM, use `textContent` (or equivalent), never
   `innerHTML`, to avoid HTML injection.

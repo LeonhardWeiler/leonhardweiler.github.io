@@ -1,174 +1,173 @@
-<!DOCTYPE html>
-<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!doctype html>
+<!-- SPDX-License-Identifier: ISC -->
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src https://opengraph.githubassets.com data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://api.github.com"
+    />
+    <meta
+      name="description"
+      content="Live GitHub Pages projects by Leonhard Weiler."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='14'>&#128640;</text></svg>"
+    />
     <title>My Projects</title>
     <style>
-    :root {
-    --bg: #f9f9f9;
-    --text: #111;
-    --card-bg: #fff;
-    --card-border: #ccc;
-    --card-shadow: rgba(0,0,0,0.1);
-    }
-    @media (prefers-color-scheme: dark) {
-    :root {
-    --bg: #121212;
-    --text: #eee;
-    --card-bg: #1e1e1e;
-    --card-border: #333;
-    --card-shadow: rgba(0,0,0,0.5);
-    }
-    }
+      :root {
+        --bg: #f9f9f9;
+        --text: #111;
+        --card-bg: #fff;
+        --card-border: #ccc;
+        --card-shadow: rgba(0, 0, 0, 0.1);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #121212;
+          --text: #eee;
+          --card-bg: #1e1e1e;
+          --card-border: #333;
+          --card-shadow: rgba(0, 0, 0, 0.5);
+        }
+      }
 
-    body {
-    font-family: system-ui, sans-serif;
-    padding: 20px;
-    background: var(--bg);
-    color: var(--text);
-    }
-    h1 { text-align: center; margin-bottom: 30px; }
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 20px;
+        background: var(--bg);
+        color: var(--text);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
 
-    #projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
-    gap: 20px;
-    }
+      #projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+        gap: 20px;
+      }
 
-    .project {
-    display: block;
-    text-decoration: none;
-    color: var(--text);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--card-bg);
-    transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .project:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 12px var(--card-shadow);
-    }
-    .project img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    }
-    .project .info {
-    padding: 10px;
-    }
-    .project .name {
-    font-weight: bold;
-    margin-bottom: 5px;
-    }
-    .project .desc {
-    font-size: 0.9em;
-    color: #555;
-    }
-    @media (prefers-color-scheme: dark) {
-    .project .desc { color: #aaa; }
-    }
+      .project {
+        display: block;
+        text-decoration: none;
+        color: var(--text);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--card-bg);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .project:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px var(--card-shadow);
+      }
+      .project img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+      }
+      .project .info {
+        padding: 10px;
+      }
+      .project .name {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .project .desc {
+        font-size: 0.9em;
+        color: #555;
+      }
+      @media (prefers-color-scheme: dark) {
+        .project .desc {
+          color: #aaa;
+        }
+      }
     </style>
   </head>
   <body>
     <h1>My Projects</h1>
-    <div id="projects">Loading projects...</div>
+    <div id="projects" aria-live="polite">Loading projects...</div>
 
     <script>
-const username = "leonhardweiler";
-const projectsContainer = document.getElementById("projects");
-const CACHE_KEY = "cachedPages";
+      const user = "leonhardweiler";
+      const box = document.getElementById("projects");
+      const CACHE_KEY = "cachedPages";
 
-async function pageExists(url) {
-  try {
-    const res = await fetch(url, { method: "HEAD" });
-    return res.ok;
-  } catch {
-    return false;
-  }
-}
+      function render(projects) {
+        box.textContent = "";
+        if (projects.length === 0) {
+          box.textContent = "No active GitHub Pages projects found.";
+          return;
+        }
+        for (const p of projects) {
+          const card = document.createElement("a");
+          card.href = p.url;
+          card.className = "project";
 
-async function fetchPagesRepos() {
-  try {
-    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
-    const repos = await res.json();
-    const pageChecks = repos
-    .filter(r => r.name !== `${username}.github.io`)
-    .map(async repo => {
-      const url = `https://${username}.github.io/${repo.name}/`;
-      if (await pageExists(url)) {
-        return {
-          name: repo.name,
-          desc: repo.description || "No description",
-          url: url,
-          img: `https://opengraph.githubassets.com/1/${username}/${repo.name}`
-        };
+          const img = document.createElement("img");
+          img.src = p.img;
+          img.alt = p.name;
+          img.onerror = () => img.remove();
+
+          const info = document.createElement("div");
+          info.className = "info";
+
+          const name = document.createElement("div");
+          name.className = "name";
+          name.textContent = p.name;
+
+          const desc = document.createElement("div");
+          desc.className = "desc";
+          desc.textContent = p.desc;
+
+          info.append(name, desc);
+          card.append(img, info);
+          box.append(card);
+        }
       }
-      return null;
-    });
 
-    const results = (await Promise.all(pageChecks)).filter(Boolean);
+      async function fetchProjects() {
+        const res = await fetch(
+          `https://api.github.com/users/${user}/repos?per_page=100`,
+        );
+        const repos = await res.json();
+        if (!Array.isArray(repos)) throw new Error("GitHub API error");
+        return repos
+          .filter((r) => r.has_pages && r.name !== `${user}.github.io`)
+          .map((r) => ({
+            name: r.name,
+            desc: r.description || "No description",
+            url: `https://${user}.github.io/${r.name}/`,
+            img: `https://opengraph.githubassets.com/1/${user}/${r.name}`,
+          }));
+      }
 
-    localStorage.setItem(CACHE_KEY, JSON.stringify(results));
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try {
+          render(JSON.parse(cached));
+        } catch {
+          localStorage.removeItem(CACHE_KEY);
+        }
+      }
 
-    return results;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
-
-function renderProjects(projects) {
-  projectsContainer.textContent = "";
-  if (projects.length === 0) {
-    projectsContainer.textContent = "No active GitHub Pages projects found.";
-    return;
-  }
-
-  for (const proj of projects) {
-    const link = document.createElement("a");
-    link.href = proj.url;
-    link.className = "project";
-
-    // Repository names and descriptions come from the GitHub API and are
-    // untrusted, so build the card with the DOM API and set text content
-    // rather than interpolating into innerHTML.
-    const img = document.createElement("img");
-    img.src = proj.img;
-    img.alt = proj.name;
-
-    const info = document.createElement("div");
-    info.className = "info";
-
-    const name = document.createElement("div");
-    name.className = "name";
-    name.textContent = proj.name;
-
-    const desc = document.createElement("div");
-    desc.className = "desc";
-    desc.textContent = proj.desc;
-
-    info.append(name, desc);
-    link.append(img, info);
-    projectsContainer.appendChild(link);
-  }
-}
-
-(async function() {
-  const cached = localStorage.getItem(CACHE_KEY);
-  if (cached) {
-    renderProjects(JSON.parse(cached));
-  }
-
-  const projects = await fetchPagesRepos();
-  if (projects.length > 0) {
-    renderProjects(projects);
-  } else if (!cached) {
-    projectsContainer.textContent = "No active GitHub Pages projects found.";
-  }
-})();
+      fetchProjects()
+        .then((projects) => {
+          render(projects);
+          localStorage.setItem(CACHE_KEY, JSON.stringify(projects));
+        })
+        .catch(() => {
+          if (!localStorage.getItem(CACHE_KEY)) {
+            box.textContent = "Couldn't load projects. Please try again later.";
+          }
+        });
     </script>
   </body>
 </html>
-

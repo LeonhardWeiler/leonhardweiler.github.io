@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Health Report &middot; leonhardweiler.github.io</title>
+    <style>
+      :root {
+        --bg: #f7f7f8;
+        --text: #16181d;
+        --muted: #5b616e;
+        --card-bg: #ffffff;
+        --card-border: #e2e4e9;
+        --card-shadow: rgba(0, 0, 0, 0.06);
+        --code-bg: #eef0f3;
+        --accent: #2f6feb;
+
+        --critical: #b3143a;
+        --critical-bg: #fde7ec;
+        --high: #c2410c;
+        --high-bg: #fdece1;
+        --medium: #9a6700;
+        --medium-bg: #fbf1d6;
+        --low: #1f6f43;
+        --low-bg: #e4f4ea;
+        --info: #3062b8;
+        --info-bg: #e6eefb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f1115;
+          --text: #e7e9ee;
+          --muted: #9aa2b1;
+          --card-bg: #171a21;
+          --card-border: #2a2f3a;
+          --card-shadow: rgba(0, 0, 0, 0.5);
+          --code-bg: #22262f;
+          --accent: #6ea0ff;
+
+          --critical: #ff9db1;
+          --critical-bg: #3a1620;
+          --high: #ffb089;
+          --high-bg: #3a2117;
+          --medium: #f2cf6a;
+          --medium-bg: #322910;
+          --low: #86e0a9;
+          --low-bg: #14301f;
+          --info: #9dc0ff;
+          --info-bg: #16233d;
+        }
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.55;
+        margin: 0;
+        padding: 32px 20px 80px;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .wrap { max-width: 900px; margin: 0 auto; }
+      header { border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 28px; }
+      h1 { font-size: 1.7rem; margin: 0 0 6px; }
+      .meta { color: var(--muted); font-size: 0.9rem; }
+      .meta code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+      .counters { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 6px; }
+      .counter {
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        background: var(--card-bg);
+        min-width: 84px;
+        text-align: center;
+      }
+      .counter .num { font-size: 1.4rem; font-weight: 700; display: block; }
+      .counter .lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+
+      h2 { font-size: 1.25rem; margin: 40px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--card-border); }
+      h2 .n { color: var(--muted); font-weight: 400; }
+
+      nav.toc { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 16px 20px; margin-bottom: 8px; }
+      nav.toc h3 { margin: 0 0 10px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+      nav.toc ol { margin: 0; padding-left: 20px; }
+      nav.toc li { margin: 3px 0; }
+      nav.toc a { color: var(--accent); text-decoration: none; }
+      nav.toc a:hover { text-decoration: underline; }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-left-width: 4px;
+        border-radius: 8px;
+        padding: 16px 18px;
+        margin: 14px 0;
+        box-shadow: 0 1px 3px var(--card-shadow);
+      }
+      .card.critical { border-left-color: var(--critical); }
+      .card.high { border-left-color: var(--high); }
+      .card.medium { border-left-color: var(--medium); }
+      .card.low { border-left-color: var(--low); }
+      .card.info { border-left-color: var(--info); }
+
+      .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 8px; }
+      .card-head .id { font-weight: 700; font-family: ui-monospace, monospace; font-size: 0.9rem; }
+      .badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 999px; }
+      .badge.critical { color: var(--critical); background: var(--critical-bg); }
+      .badge.high { color: var(--high); background: var(--high-bg); }
+      .badge.medium { color: var(--medium); background: var(--medium-bg); }
+      .badge.low { color: var(--low); background: var(--low-bg); }
+      .badge.info { color: var(--info); background: var(--info-bg); }
+      .loc { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--muted); }
+      .card p { margin: 6px 0; }
+      .card .rec { margin-top: 8px; }
+      .card .rec strong { color: var(--text); }
+      code { font-family: ui-monospace, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+
+      .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 0.82rem; color: var(--muted); }
+      .legend span { display: inline-flex; align-items: center; gap: 6px; }
+      .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+      .dot.critical { background: var(--critical); }
+      .dot.high { background: var(--high); }
+      .dot.medium { background: var(--medium); }
+      .dot.low { background: var(--low); }
+      .dot.info { background: var(--info); }
+
+      ul.plain { padding-left: 20px; }
+      ul.plain li { margin: 8px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Project Health Report</h1>
+        <p class="meta">
+          Repository <code>leonhardweiler.github.io</code> &middot;
+          Branch <code>main</code> &middot;
+          Snapshot from 2026-07-16
+        </p>
+        <div class="legend">
+          <span><span class="dot critical"></span> critical</span>
+          <span><span class="dot high"></span> high</span>
+          <span><span class="dot medium"></span> medium</span>
+          <span><span class="dot low"></span> low</span>
+          <span><span class="dot info"></span> info</span>
+        </div>
+      </header>
+
+      <section class="counters" aria-label="Summary">
+        <div class="counter"><span class="num">0</span><span class="lbl">Critical</span></div>
+        <div class="counter"><span class="num">0</span><span class="lbl">High</span></div>
+        <div class="counter"><span class="num">4</span><span class="lbl">Medium</span></div>
+        <div class="counter"><span class="num">4</span><span class="lbl">Low</span></div>
+        <div class="counter"><span class="num">1</span><span class="lbl">Info</span></div>
+        <div class="counter"><span class="num">9</span><span class="lbl">Open total</span></div>
+      </section>
+
+      <nav class="toc">
+        <h3>Contents</h3>
+        <ol>
+          <li><a href="#open">Open findings</a> (9)</li>
+          <li><a href="#strong">What is already strong</a></li>
+          <li><a href="#decided">Deliberately decided</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="open"><span class="n">1.</span> Open findings</h2>
+
+      <article class="card medium" id="UX-1">
+        <div class="card-head">
+          <span class="id">UX-1</span>
+          <span class="badge medium">medium</span>
+          <span class="loc">index.html &middot; &lt;head&gt;</span>
+        </div>
+        <p><strong>No <code>viewport</code> meta tag &rarr; not mobile-responsive.</strong>
+          The page declares a responsive grid (<code>minmax(440px, 1fr)</code>) and the
+          README claims the layout &ldquo;adapts to the viewport,&rdquo; but without
+          <code>&lt;meta name="viewport"&gt;</code> mobile browsers render at a virtual desktop
+          width and zoom the whole page out. Cards become tiny and text hard to read on
+          phones; media queries behave against the layout viewport rather than the device
+          width.</p>
+        <p class="rec"><strong>Recommendation:</strong> add
+          <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>
+          in the head. Consider lowering the grid min column from <code>440px</code> so a
+          single card fits a narrow screen without horizontal scroll.</p>
+      </article>
+
+      <article class="card medium" id="BUG-1">
+        <div class="card-head">
+          <span class="id">BUG-1</span>
+          <span class="badge medium">medium</span>
+          <span class="loc">index.html:159&ndash;161</span>
+        </div>
+        <p><strong>Unguarded <code>JSON.parse(cached)</code> can brick the whole page.</strong>
+          The startup IIFE calls <code>JSON.parse(localStorage.getItem(CACHE_KEY))</code>
+          without a try/catch. If the cached value is malformed (partial write, storage
+          tampering, format change across versions), the exception propagates out of the
+          async IIFE and aborts initialization entirely, so the fresh fetch never runs and
+          the visitor is stuck on &ldquo;Loading projects&hellip;&rdquo; forever.</p>
+        <p class="rec"><strong>Recommendation:</strong> wrap the parse in try/catch; on
+          failure ignore the cache (and optionally <code>localStorage.removeItem</code> it)
+          and fall through to the live fetch.</p>
+      </article>
+
+      <article class="card medium" id="BUG-2">
+        <div class="card-head">
+          <span class="id">BUG-2</span>
+          <span class="badge medium">medium</span>
+          <span class="loc">index.html:83&ndash;113</span>
+        </div>
+        <p><strong>Transient network failures poison the cache.</strong>
+          <code>pageExists()</code> returns <code>false</code> on any thrown error (timeout,
+          DNS blip, offline). A project whose <code>HEAD</code> check momentarily fails is
+          dropped from the rendered list <em>and</em> the result is unconditionally written
+          back to <code>localStorage</code> (line 113). So a temporary hiccup silently
+          removes a live project from the cache, and the next visit&rsquo;s instant render
+          shows the reduced set until a fully successful check restores it.</p>
+        <p class="rec"><strong>Recommendation:</strong> distinguish &ldquo;404 / not a Pages
+          site&rdquo; from &ldquo;request failed&rdquo;; only overwrite the cache when the
+          repo list actually loaded, and avoid dropping a previously-known-live project on a
+          single failed check (e.g. keep prior entries or skip the cache write on error).</p>
+      </article>
+
+      <article class="card medium" id="UX-2">
+        <div class="card-head">
+          <span class="id">UX-2</span>
+          <span class="badge medium">medium</span>
+          <span class="loc">index.html:92&ndash;95, 116&ndash;119, 167&ndash;169</span>
+        </div>
+        <p><strong>API errors are indistinguishable from &ldquo;no projects.&rdquo;</strong>
+          The unauthenticated GitHub API allows only ~60 requests/hour per IP. When the
+          repos request is rate-limited it returns a JSON error object, not an array;
+          <code>repos.filter</code> then throws, is swallowed by the outer catch, and
+          <code>fetchPagesRepos</code> returns <code>[]</code>. With no cache present the
+          visitor sees the misleading message &ldquo;No active GitHub Pages projects
+          found.&rdquo; instead of an error/retry hint.</p>
+        <p class="rec"><strong>Recommendation:</strong> check <code>res.ok</code> /
+          <code>Array.isArray(repos)</code> before filtering and surface a distinct
+          &ldquo;couldn&rsquo;t load projects, try again later&rdquo; state separate from the
+          genuinely-empty case.</p>
+      </article>
+
+      <article class="card low" id="SEC-1">
+        <div class="card-head">
+          <span class="id">SEC-1</span>
+          <span class="badge low">low</span>
+          <span class="loc">index.html &middot; &lt;head&gt;</span>
+        </div>
+        <p><strong>No Content-Security-Policy.</strong> The page has no CSP meta tag. Since
+          all script is inline and only two external hosts are contacted
+          (<code>api.github.com</code>, <code>*.githubusercontent</code>/<code>opengraphgithubassets.com</code>,
+          plus <code>*.github.io</code> HEAD checks), a restrictive policy is cheap defense
+          in depth against injected content.</p>
+        <p class="rec"><strong>Recommendation:</strong> add a
+          <code>&lt;meta http-equiv="Content-Security-Policy"&gt;</code> limiting
+          <code>default-src 'none'</code>, <code>img-src</code> to the GitHub asset hosts,
+          <code>connect-src</code> to the API/Pages hosts, and allowing the inline style/script
+          only as strictly as feasible.</p>
+      </article>
+
+      <article class="card low" id="A11Y-1">
+        <div class="card-head">
+          <span class="id">A11Y-1</span>
+          <span class="badge low">low</span>
+          <span class="loc">index.html:76</span>
+        </div>
+        <p><strong>Results region is not announced to assistive tech.</strong> The
+          <code>#projects</code> container starts as &ldquo;Loading projects&hellip;&rdquo; and
+          is replaced later via <code>textContent</code>, but it has no
+          <code>aria-live</code>, so screen-reader users get no notification when the loading
+          text becomes the project list (or an empty/error message).</p>
+        <p class="rec"><strong>Recommendation:</strong> add <code>aria-live="polite"</code>
+          (and consider <code>role="status"</code> for the transient text) to the container,
+          or move the status text into a dedicated live region.</p>
+      </article>
+
+      <article class="card low" id="UX-3">
+        <div class="card-head">
+          <span class="id">UX-3</span>
+          <span class="badge low">low</span>
+          <span class="loc">index.html:137&ndash;139</span>
+        </div>
+        <p><strong>No fallback for broken preview images.</strong> Each card&rsquo;s
+          <code>&lt;img&gt;</code> points at
+          <code>opengraphgithubassets.com/1/&hellip;</code>. If that request fails or a repo
+          has no Open Graph image, the card shows a broken-image icon over its fixed
+          240&nbsp;px area with no graceful degradation.</p>
+        <p class="rec"><strong>Recommendation:</strong> add an <code>onerror</code> handler
+          that hides the image or swaps in a neutral placeholder, so the card still reads
+          cleanly with just name and description.</p>
+      </article>
+
+      <article class="card info" id="META-1">
+        <div class="card-head">
+          <span class="id">META-1</span>
+          <span class="badge info">info</span>
+          <span class="loc">index.html:92&ndash;94 &middot; &lt;head&gt;</span>
+        </div>
+        <p><strong>Minor polish: pagination cap, SEO/meta, favicon.</strong> The repos fetch
+          uses <code>per_page=100</code> with no pagination, so accounts with more than 100
+          repositories would silently miss the rest. The head also lacks a
+          <code>&lt;meta name="description"&gt;</code> and there is no favicon &mdash; small
+          SEO/branding gaps for a public landing page.</p>
+        <p class="rec"><strong>Recommendation:</strong> follow the <code>Link</code>
+          pagination header if the repo count may exceed 100 (currently unlikely), and add a
+          page description and a favicon.</p>
+      </article>
+
+      <h2 id="strong"><span class="n">2.</span> What is already strong</h2>
+      <ul class="plain">
+        <li><strong>HTML-injection safe rendering.</strong> Untrusted repo names and
+          descriptions are inserted via <code>textContent</code> and DOM APIs, never
+          <code>innerHTML</code> &mdash; matching the documented convention and closing the
+          previously reported injection risk.</li>
+        <li><strong>Instant perceived load.</strong> Cached results render immediately on
+          startup before the network round-trips complete.</li>
+        <li><strong>Parallel liveness checks.</strong> The candidate <code>HEAD</code>
+          requests run concurrently via <code>Promise.all</code>, keeping the refresh fast.</li>
+        <li><strong>Light/dark theming.</strong> Clean CSS-variable theming driven by
+          <code>prefers-color-scheme</code>, including a dark-mode description color.</li>
+        <li><strong>Zero dependencies, no build step.</strong> The whole site is one
+          self-contained <code>index.html</code> &mdash; easy to audit and deploy.</li>
+        <li><strong>Housekeeping.</strong> <code>lang="en"</code> is set, images carry
+          <code>alt</code> text, an SPDX license identifier is present, and
+          <code>README</code>/<code>CHANGELOG</code>/<code>CLAUDE.md</code> are consistent
+          with the current code.</li>
+      </ul>
+
+      <h2 id="decided"><span class="n">3.</span> Deliberately decided</h2>
+      <ul class="plain">
+        <li><strong>Everything inline in <code>index.html</code>.</strong> Markup, CSS and
+          JS live in one file by design (documented in <code>CLAUDE.md</code>); not treated
+          as a finding.</li>
+        <li><strong>Unauthenticated GitHub API.</strong> A public static page cannot embed a
+          secret token, so the low anonymous rate limit is an accepted trade-off. (The UX
+          around hitting that limit is still worth improving &mdash; see UX-2.)</li>
+        <li><strong>No framework / toolchain / tests.</strong> For a single static page this
+          is a reasonable simplicity choice; no test harness is expected here.</li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -374,6 +374,11 @@
           <strong>Self-explanatory code.</strong> Short, clearly named code with
           no comments, contained in one <code>index.html</code>.
         </li>
+        <li>
+          <strong>FSF LibreJS compliant.</strong> The inline script is wrapped in
+          <code>@license</code> / <code>@license-end</code> labels with the ISC
+          magnet link, so the LibreJS extension recognizes it as free.
+        </li>
       </ul>
 
       <h2 id="decided"><span class="n">3.</span> Deliberately decided</h2>
@@ -391,9 +396,10 @@
           effectively the last commit, for one cheap request.
         </li>
         <li>
-          <strong>Minimal gray/white/black styling.</strong> A compact monospace
-          table in the git.suckless.org spirit; like that site it is not
-          specially optimized for narrow screens, which is accepted.
+          <strong>Minimal dark gray/white/black styling.</strong> A compact
+          monospace table in the git.suckless.org spirit, dark-themed; like that
+          site it is not specially optimized for narrow screens, which is
+          accepted.
         </li>
         <li>
           <strong>No pagination.</strong> <code>per_page=100</code> covers a

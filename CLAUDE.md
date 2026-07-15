@@ -14,7 +14,8 @@ git.suckless.org-style table (gray/white/black), with one row per repo.
 - `index.html`: the entire site. Markup, CSS, and JavaScript live inline in this
   one file. There is no build step and there are no dependencies.
 - `LICENSE`: ISC license text.
-- `README.md`: project description and license.
+- `README`: plain-text file (no extension, so GitHub renders it monospace)
+  holding the license.
 - `AGENT/`: working files for automated agents (reports). Not part of the
   published site.
 
@@ -43,7 +44,10 @@ python3 -m http.server
 
 - Keep the site dependency-free and contained in `index.html`.
 - Keep it minimal: solve the problem simply and let the code explain itself.
-  Prefer clear names over comments; do not add comments.
+  Prefer clear names over comments; do not add comments. The only exception is
+  the `@license` / `@license-end` labels wrapping the inline script: they are
+  required for FSF LibreJS compliance (magnet link for ISC) and must be kept.
+- The page is dark-themed in gray/white/black; keep it that way.
 - All user-facing text is in English.
 - Data from the GitHub API (repository names and descriptions) is untrusted
   input. When inserting it into the DOM, use `textContent` (or equivalent),

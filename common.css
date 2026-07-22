@@ -12,35 +12,33 @@
 *,
 *::before,
 *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 1rem;
-  font-weight: 400;
+}
+
+[id] {
+  scroll-margin-top: 10rem;
 }
 
 body {
-  font-family: monospace;
-  color: var(--text-color);
   background: var(--bg-color);
-  margin: 0;
+  color: var(--text-color);
+  font: 1rem / 1.5 monospace;
   padding: 2em;
 }
 
-li {
-  list-style: none;
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.5rem;
+  color: var(--heading-color);
 }
 
 p {
-  width: 50ch;
-}
-
-.mark {
-  font-weight: 900;
-}
-
-.shrink {
-  white-space: nowrap;
-  width: 1%;
+  width: min(50ch, 100%);
+  margin-bottom: 1rem;
 }
 
 a {
@@ -48,36 +46,59 @@ a {
   text-decoration: none;
 }
 
+ul > li {
+  list-style: none;
+}
+
+.note {
+  padding-left: 1rem;
+  border-left: 1px solid var(--text-color);
+  margin-block: 1rem;
+}
+
+ol {
+  padding-left: 2rem;
+}
+
+.mark {
+  font-weight: 900;
+}
+
+.shrink {
+  width: 1%;
+}
+
 a:hover,
 a:focus,
 .selected {
-  background-color: var(--selection-bg);
+  background: var(--selection-bg);
   color: var(--selection-color);
   outline: none;
 }
 
 ::selection {
-  background-color: var(--selection-bg);
+  background: var(--selection-bg);
   color: var(--selection-color);
 }
 
 table {
-  border-collapse: collapse;
   width: 90vw;
+  border-collapse: collapse;
 }
 
 th,
 td {
-  text-align: left;
   padding: 0.15em 1.5em 0.15em 0.3em;
+  text-align: left;
   vertical-align: top;
-}
-
-tbody tr:hover {
-  background-color: var(--hover-color);
+  white-space: nowrap;
 }
 
 th {
-  border-bottom: 1px solid var(--border-color);
   color: var(--heading-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+tbody tr:hover {
+  background: var(--hover-color);
 }

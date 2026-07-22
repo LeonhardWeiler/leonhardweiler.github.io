@@ -11,31 +11,28 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='7' fill='%23303443'/></svg>"
     />
+    <link rel="stylesheet" href="./common.css" />
     <title>Repositories</title>
     <style>
-      body {
-        font-family: monospace;
-        color: #888;
-        background: #111;
-        margin: 0;
-        padding: 1em;
+      table {
+        border-collapse: collapse;
+        width: 90vw;
       }
+
       th,
       td {
         text-align: left;
         padding: 0.15em 1.5em 0.15em 0.3em;
         vertical-align: top;
       }
+
       tbody tr:hover {
-        background-color: #222;
+        background-color: var(--hover-color);
       }
+
       th {
-        border-bottom: 1px solid #444;
-        color: #eee;
-      }
-      a {
-        color: #eee;
-        text-decoration: underline;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--heading-color);
       }
     </style>
   </head>
@@ -45,63 +42,120 @@
         <tr>
           <th>Name</th>
           <th>Description</th>
-          <th>Last commit</th>
         </tr>
       </thead>
-      <tbody aria-live="polite">
+      <tbody>
         <tr>
-          <td colspan="3">Loading…</td>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/dotfiles"
+              target="_blank"
+              rel="noopener noreferrer"
+              >dotfiles</a
+            >
+          </td>
+          <td>Arch + dwl dotfiles</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/leonhardweiler.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              >leonhardweiler.github.io</a
+            >
+          </td>
+          <td>My github.io page</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/MusikerWebsite"
+              target="_blank"
+              rel="noopener noreferrer"
+              >MusikerWebsite</a
+            >
+          </td>
+          <td>Small website about musicians</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/plantbased"
+              target="_blank"
+              rel="noopener noreferrer"
+              >plantbased</a
+            >
+          </td>
+          <td>Astro website describing plants</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/slf"
+              target="_blank"
+              rel="noopener noreferrer"
+              >slf</a
+            >
+          </td>
+          <td>Stadt Land Fluss Multiplayer game over websockets</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/sudovim"
+              target="_blank"
+              rel="noopener noreferrer"
+              >sudovim</a
+            >
+          </td>
+          <td>Sudoku with vim motions in the browser</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/the_grid"
+              target="_blank"
+              rel="noopener noreferrer"
+              >the_grid</a
+            >
+          </td>
+          <td>r/place clone with go backend over websockets</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/theaterverein-grosskirchheim"
+              target="_blank"
+              rel="noopener noreferrer"
+              >theaterverein-grosskirchheim</a
+            >
+          </td>
+          <td>Website for the Theaterverein Großkirchheim</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/weatherapp"
+              target="_blank"
+              rel="noopener noreferrer"
+              >weatherapp</a
+            >
+          </td>
+          <td>Weather webapp with openweather api</td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://github.com/leonhardweiler/word-search"
+              target="_blank"
+              rel="noopener noreferrer"
+              >word-search</a
+            >
+          </td>
+          <td>Word search game in browser</td>
         </tr>
       </tbody>
     </table>
-
-    <script>
-      // @license magnet:?xt=urn:btih:b8999bbaf509c08d127678643c515b9ab0836bae&dn=ISC.txt ISC
-      const user = "leonhardweiler";
-      const tbody = document.querySelector("tbody");
-
-      function note(text) {
-        const td = document.createElement("td");
-        td.colSpan = 3;
-        td.textContent = text;
-        const tr = document.createElement("tr");
-        tr.append(td);
-        tbody.replaceChildren(tr);
-      }
-
-      fetch(`https://api.github.com/users/${user}/repos?per_page=100`)
-        .then((res) => res.json())
-        .then((repos) => {
-          if (!Array.isArray(repos)) throw new Error();
-          if (repos.length === 0) return note("No repositories.");
-          repos.sort((a, b) => a.name.localeCompare(b.name));
-          tbody.replaceChildren(
-            ...repos.map((repo) => {
-              const link = document.createElement("a");
-              link.href = repo.html_url;
-              link.textContent = repo.name;
-
-              const name = document.createElement("td");
-              name.append(link);
-
-              const desc = document.createElement("td");
-              desc.className = "desc";
-              desc.textContent = repo.description || "";
-
-              const age = document.createElement("td");
-              age.className = "age";
-              age.textContent = repo.pushed_at
-                ? repo.pushed_at.slice(0, 10)
-                : "";
-
-              const tr = document.createElement("tr");
-              tr.append(name, desc, age);
-              return tr;
-            }),
-          );
-        })
-        .catch(() => note("Unable to load repositories."));
-      // @license-end
-    </script>
   </body>
 </html>

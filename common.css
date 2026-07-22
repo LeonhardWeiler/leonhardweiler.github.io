@@ -1,0 +1,36 @@
+:root {
+  --bg-color: #111;
+  --text-color: #888;
+  --heading-color: #eee;
+  --hover-color: #222;
+  --border-color: #444;
+  --link-color: #eee;
+  --selection-bg: #eee;
+  --selection-color: #111;
+}
+
+body {
+  font-family: monospace;
+  color: var(--text-color);
+  background: var(--bg-color);
+  margin: 0;
+  padding: 1em;
+  font-size: 0.8rem;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+  outline: none;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}

@@ -216,7 +216,8 @@ ul > li {
   list-style: none;
 }
 
-nav a {
+nav a,
+td a {
   display: block;
   width: 100%;
 }
@@ -245,10 +246,6 @@ li:focus a span,
 .selected span {
   background: var(--light-color);
   color: var(--bg-color);
-
-  &::after {
-    color: var(--border-color);
-  }
 }
 
 ::selection {
@@ -282,10 +279,14 @@ pre {
 
 th,
 td {
-  padding: 0.15em 1.5em 0.15em 0.3em;
   text-align: left;
   vertical-align: top;
   white-space: nowrap;
+}
+
+th > *,
+td > * {
+  padding: 0.15em 1.5em 0.15em 0.3em;
 }
 
 th {
@@ -302,14 +303,13 @@ ul:hover a.selected span {
   color: var(--light-color);
 }
 
+a:focus span,
 li:hover a.selected span {
   background: var(--light-color);
   color: var(--bg-color);
 }
 
-a:hover:not(:has(span)),
-a:focus:not(:has(span)) {
+td:has(a):hover a span {
   background: var(--light-color);
   color: var(--bg-color);
-  text-decoration: none;
 }

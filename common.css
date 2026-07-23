@@ -211,18 +211,13 @@ a {
   text-decoration: none;
 }
 
-nav a {
-  display: block;
-  width: max-content;
-}
-
 ul > li {
   list-style: none;
 }
 
-ul:has(a:not(.selected):hover) a.selected {
-  background-color: transparent;
-  color: var(--light-color);
+nav a {
+  display: block;
+  width: 100%;
 }
 
 .note {
@@ -244,9 +239,9 @@ mark {
   width: 1%;
 }
 
-a:hover,
-a:focus,
-.selected {
+li:hover a span,
+li:focus a span,
+.selected span {
   background: var(--light-color);
   color: var(--bg-color);
   outline: none;
@@ -301,4 +296,14 @@ th {
 
 tbody tr:hover {
   background: var(--middle-color);
+}
+
+ul:hover a.selected span {
+  background: transparent;
+  color: var(--light-color);
+}
+
+li:hover a.selected span {
+  background: var(--light-color);
+  color: var(--bg-color);
 }

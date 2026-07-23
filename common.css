@@ -33,9 +33,12 @@ h4 {
   color: var(--light-color);
 }
 
-code {
+code,
+kbd,
+samp {
   background-color: var(--middle-color);
   padding: 0.2em;
+  white-space: nowrap;
 }
 
 p {

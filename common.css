@@ -62,11 +62,11 @@
     --variable-member-color: #77713f;
     --variable-parameter-color: #5d57a3;
   }
+}
 
-  p a {
-    text-decoration: underline;
-    text-decoration-style: wavy;
-  }
+p a {
+  text-decoration: underline;
+  text-decoration-style: wavy;
 }
 
 .-variable {
@@ -202,6 +202,7 @@ samp {
 }
 
 p {
+  line-height: 1.1lh;
   width: min(50ch, 100%);
 }
 
@@ -210,8 +211,18 @@ a {
   text-decoration: none;
 }
 
+nav a {
+  display: block;
+  width: max-content;
+}
+
 ul > li {
   list-style: none;
+}
+
+ul:has(a:not(.selected):hover) a.selected {
+  background-color: transparent;
+  color: var(--light-color);
 }
 
 .note {
@@ -239,6 +250,7 @@ a:focus,
   background: var(--light-color);
   color: var(--bg-color);
   outline: none;
+  text-decoration: none;
 
   &::after {
     color: var(--border-color);

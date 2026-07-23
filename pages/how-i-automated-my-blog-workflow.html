@@ -25,6 +25,7 @@
           Creates a new page with boilerplate html from the
           <code>texts.html</code> table.
         </li>
+        <li>Writing a new neovim function to update the edited date.</li>
       </ol>
     </div>
 
@@ -42,12 +43,146 @@
     </p>
     <p>
       The idea is simple. I use neovim for editing all my files and in neovim
-      you're able to create your own functions. I only want to add a new entry
-      to the <code>texts.html</code> table, run a neovim function and the file
-      with boilerplate html should get created. This seems fairly simple.
+      you're able to create your own functions. I want to run a function in
+      neovim (<code>:NewText</code>) which prompts me to put in a name for a
+      title. It creates a file, fills it and creates an entry in the texts table
+      on its own. This seems fairly simple.
     </p>
-    <p>The first thing I did was creating such a boilerplate html file.</p>
-    <p>In progress ...</p>
+    <p>
+      The first thing I did was creating such a boilerplate html file. I create
+      a new folder <code>templates/</code> and put the boilerplate as
+      <code>text.html</code> inside of it.
+    </p>
+    <p>
+      Then I created a new <code>blog.lua</code> file in my
+      <code>lua/config/</code> directory in neovim and included it into my
+      <code>lua/config/lazy.lua</code>:
+    </p>
+
+    <code> require("config.blog") </code>
+
+    <p>
+      Then I added a <code>new_text()</code> function that reads the date and
+      asks the user for a title and then creates the text file and the table
+      entry:
+    </p>
+
+    <pre><code> function M.new_text()
+  vim.ui.input({
+    prompt = "Title: ",
+  }, function(title)
+    if not title or title == "" then
+      return
+    end
+
+    local slug = slugify(title)
+    local filename = slug .. ".html"
+    local filepath = pages .. "/" .. filename
+    local date = os.date("%Y-%m-%d")
+
+    if vim.fn.filereadable(filepath) == 1 then
+      print("File already exists.")
+      return
+    end
+
+    local lines = vim.fn.readfile(template)
+
+    for i, line in ipairs(lines) do
+      line = line:gsub("{{TITLE}}", title)
+      lines[i] = line
+    end
+
+    vim.fn.writefile(lines, filepath)
+
+    local html = vim.fn.readfile(texts)
+
+    local row = {
+      "        <tr>",
+      "          <td>",
+      '            <a href="./pages/' .. filename .. '">',
+      "              " .. title,
+      "            </a>",
+      "          </td>",
+      '          <td class="shrink">' .. date .. "</td>",
+      '          <td class="shrink">' .. date .. "</td>",
+      "        </tr>",
+    }
+
+    for i, line in ipairs(html) do
+      if line:find("<tbody>") then
+        for j = #row, 1, -1 do
+          table.insert(html, i + 1, row[j])
+        end
+        break
+      end
+    end
+
+    vim.fn.writefile(html, texts)
+
+    vim.cmd("edit " .. filepath)
+
+    print("Created " .. filename)
+  end)
+end</code></pre>
+
+    <p>
+      After creating that I restartet neovim and created my first text page like
+      that, but there was still something I wanted to do. In my text table I
+      have a date for created and edited and I also wanted to create a function
+      for updating the edited date, so I did that:
+    </p>
+    <pre><code>function M.update_edited()
+  local filepath = vim.fn.expand("%:p")
+
+  if not filepath:find("/pages/") then
+    return
+  end
+
+  local filename = vim.fn.expand("%:t")
+  local date = os.date("%Y-%m-%d")
+
+  local html = vim.fn.readfile(texts)
+
+  local found = false
+
+  for i, line in ipairs(html) do
+    if line:find("./pages/" .. filename, 1, true) then
+      found = true
+
+      for j = i, math.min(i + 10, #html) do
+        if html[j]:find('<td class="shrink">') then
+          if html[j + 1] and html[j + 1]:find('<td class="shrink">') then
+            html[j + 1] = '          <td class="shrink">' .. date .. "</td>"
+            break
+          end
+        end
+      end
+
+      break
+    end
+  end
+
+  if found then
+    vim.fn.writefile(html, texts)
+    print("Updated edited date")
+  end
+end</code></pre>
+
+    <p>
+      The whole code can be found in my
+      <a id="link-1" href="#footnote-1">dotfiles repository</a> if you want to
+      check it out or have improvement suggestions. That is it for now and I
+      hope it will work for the next time. If it doesn't I'll make a follow up
+      :)
+    </p>
+
+    <p>
+      For transparency, I wrote this post myself and then asked
+      <a id="link-2" href="#footnote-2">ChatGPT</a> to correct grammatical
+      mistakes and improve the overall reading experience, as English is not my
+      first language. The source code is nearly 100% written by
+      <a id="link-3" href="#footnote-3">ChatGPT</a>
+    </p>
 
     <div class="note">
       <p>Further reading:</p>
@@ -63,8 +198,35 @@
       </ol>
     </div>
 
-    <!-- <ul> -->
-    <!--   <li></li> -->
-    <!-- </ul> -->
+    <ul>
+      <li>
+        <a href="#link-1">[1]</a>
+        <a
+          id="footnote-1"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/LeonhardWeiler/dotfiles/tree/main/config/nvim"
+        >
+          My dotfiles repository - neovim (Github)
+        </a>
+      </li>
+      <li>
+        <a href="#link-2">[2]</a>
+        <a id="footnote-2" target="_blank" rel="noopener noreferrer" href="">
+          Improving this text (ChatGPT)
+        </a>
+      </li>
+      <li>
+        <a href="#link-3">[3]</a>
+        <a
+          id="footnote-3"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://chatgpt.com/s/t_6a6166182ce481919fba62845852dcfc"
+        >
+          Writing the source code (ChatGPT)
+        </a>
+      </li>
+    </ul>
   </body>
 </html>

@@ -6,27 +6,6 @@
   --border-color: #444;
   --overflow-select-color: #223249;
   --select-color: #a7a7a7;
-
-  --code-bg-color: #181616;
-  --code-text-color: #c5c9c5;
-  --variable-color: #c5c9c5;
-  --operator-color: #c4746e;
-  --string-regexp-color: #c4746e;
-  --number-color: #a292a3;
-  --keyword-return-color: #c4746e;
-  --keyword-color: #8992a7;
-  --constructor-lua-color: #8992a7;
-  --constant-color: #b6927b;
-  --punctuation-delimiter-color: #9e9b93;
-  --function-color: #8ba4b0;
-  --boolean-color: #b6927b;
-  --identifier-color: #c4b28a;
-  --string-color: #8a9a7b;
-  --punctuation-bracket-color: #9e9b93;
-  --special-color: #949fb5;
-  --keyword-operator-color: #c4746e;
-  --variable-member-color: #c4b28a;
-  --variable-parameter-color: #a6a69c;
 }
 
 @media (prefers-color-scheme: light) {
@@ -38,117 +17,7 @@
     --border-color: #b8b08a;
     --overflow-select-color: #d7dbe5;
     --select-color: #a7a7a7;
-
-    --code-bg-color: #fff9dd;
-    --code-text-color: #545464;
-    --variable-color: #545464;
-    --operator-color: #836f4a;
-    --string-regexp-color: #b35b79;
-    --number-color: #b35b79;
-    --keyword-return-color: #c84053;
-    --keyword-color: #624c83;
-    --constructor-lua-color: #624c83;
-    --constant-color: #cc6d00;
-    --punctuation-delimiter-color: #4e8ca2;
-    --function-color: #4d699b;
-    --boolean-color: #cc6d00;
-    --identifier-color: #77713f;
-    --string-color: #6f894e;
-    --punctuation-bracket-color: #4e8ca2;
-    --special-color: #6693bf;
-    --keyword-operator-color: #836f4a;
-    --variable-member-color: #77713f;
-    --variable-parameter-color: #5d57a3;
   }
-}
-
-a:not(:has(span)):hover,
-a:not(:has(span)):focus {
-  background: var(--light-color);
-  color: var(--bg-color);
-  text-decoration: none;
-}
-
-p a {
-  text-decoration: underline;
-  text-decoration-style: wavy;
-}
-
-.-variable {
-  color: var(--variable-color);
-}
-
-.Operator {
-  color: var(--operator-color);
-}
-
-.-string-regexp {
-  color: var(--string-regexp-color);
-}
-
-.Number {
-  color: var(--number-color);
-}
-
-.-keyword-return {
-  color: var(--keyword-return-color);
-  font-style: italic;
-}
-
-.Keyword {
-  color: var(--keyword-color);
-  font-style: italic;
-}
-
-.-constructor-lua {
-  color: var(--constructor-lua-color);
-}
-
-.Constant {
-  color: var(--constant-color);
-}
-
-.-punctuation-delimiter {
-  color: var(--punctuation-delimiter-color);
-}
-
-.Function {
-  color: var(--function-color);
-  font-style: italic;
-}
-
-.Boolean {
-  color: var(--boolean-color);
-  font-weight: bold;
-}
-
-.Identifier {
-  color: var(--identifier-color);
-}
-
-.String {
-  color: var(--string-color);
-}
-
-.-punctuation-bracket {
-  color: var(--punctuation-bracket-color);
-}
-
-.Special {
-  color: var(--special-color);
-}
-
-.-keyword-operator {
-  color: var(--keyword-operator-color);
-  font-weight: bold;
-}
-
-.-variable-member {
-  color: var(--variable-member-color);
-}
-
-.-variable-parameter {
-  color: var(--variable-parameter-color);
 }
 
 *,
@@ -157,6 +26,47 @@ p a {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font: 1rem / 1.5 monospace;
+  padding: 2em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--light-color);
+}
+
+p {
+  line-height: 1.65rem;
+  width: min(50ch, 100%);
+}
+
+a {
+  color: var(--light-color);
+  text-decoration: none;
+}
+
+a:focus {
+  outline: none;
+}
+
+p a {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+}
+
+ul > li {
+  list-style: none;
+}
+
+ol {
+  padding-left: 2rem;
 }
 
 [id] {
@@ -175,56 +85,42 @@ table,
   margin-top: 0.5rem;
 }
 
-body {
-  background: var(--bg-color);
-  color: var(--text-color);
-  font: 1rem / 1.5 monospace;
-  padding: 2em;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  color: var(--light-color);
-}
-
-.not-started::after {
-  content: "[NOT STARTED]";
-  font: 1rem / 1.5 monospace;
-  color: var(--text-color);
-  margin-left: 0.5em;
-  white-space: nowrap;
-}
-
-code,
-kbd,
-samp {
-  background-color: var(--middle-color);
-  padding: 0.2em;
-  white-space: nowrap;
-  color: var(--string-color);
-}
-
-p {
-  line-height: 1.65rem;
-  width: min(50ch, 100%);
-}
-
-a {
-  color: var(--light-color);
-  text-decoration: none;
-  outline: none;
-}
-
-ul > li {
-  list-style: none;
-}
-
 nav a,
 td a {
   display: block;
   width: 100%;
+}
+
+table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+th,
+td,
+td a {
+  padding: 0.15em 1.5em 0.15em 0.3em;
+}
+
+td:has(a) {
+  padding: 0;
+}
+
+th {
+  color: var(--light-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.shrink {
+  width: 1%;
 }
 
 .note {
@@ -232,24 +128,56 @@ td a {
   border-left: 1px solid var(--border-color);
 }
 
-ol {
-  padding-left: 2rem;
+.not-started::after {
+  content: "[NOT STARTED]";
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--text-color);
+  margin-left: 0.5em;
+  white-space: nowrap;
 }
 
-mark {
-  font-weight: 900;
-  background-color: inherit;
-  color: inherit;
+.overflow-wrapper {
+  overflow-x: auto;
 }
 
-.shrink {
-  width: 1%;
+pre {
+  background: #181616;
+  color: #c5c9c5;
+  width: max-content;
+  min-width: 50%;
+  padding: 1rem;
 }
 
-li:hover a span,
+code,
+kbd,
+samp {
+  background: var(--middle-color);
+  padding: 0.2em;
+  white-space: nowrap;
+}
+
+a:hover span,
+a:focus span,
 .selected span {
   background: var(--light-color);
   color: var(--bg-color);
+}
+
+nav ul:hover a.selected:not(:hover) span {
+  background: transparent;
+  color: var(--light-color);
+}
+
+a:not(:has(span)):hover,
+a:not(:has(span)):focus {
+  background: var(--light-color);
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
+tbody tr:hover {
+  background: var(--middle-color);
 }
 
 ::selection {
@@ -259,57 +187,106 @@ li:hover a span,
 
 .overflow-wrapper:has(pre) *::selection,
 code::selection {
-  background-color: var(--overflow-select-color) !important;
-  color: inherit !important;
+  background: var(--overflow-select-color);
+  color: inherit;
 }
 
-.overflow-wrapper {
-  overflow-x: auto;
+.Operator,
+.-string-regexp,
+.-keyword-return,
+.-keyword-operator {
+  color: #c4746e;
+}
+.Keyword,
+.-constructor-lua {
+  color: #8992a7;
+}
+.Constant,
+.Boolean {
+  color: #b6927b;
+}
+.-punctuation-delimiter,
+.-punctuation-bracket {
+  color: #9e9b93;
+}
+.Identifier,
+.-variable-member {
+  color: #c4b28a;
+}
+.String,
+code,
+kbd,
+samp {
+  color: #8a9a7b;
+}
+.Number {
+  color: #a292a3;
+}
+.Function {
+  color: #8ba4b0;
+}
+.Special {
+  color: #949fb5;
+}
+.-variable-parameter {
+  color: #a6a69c;
 }
 
-table {
-  width: max-content;
-  min-width: 100%;
-  border-collapse: collapse;
+.Keyword,
+.-keyword-return,
+.Function {
+  font-style: italic;
+}
+.Boolean,
+.-keyword-operator {
+  font-weight: bold;
 }
 
-pre {
-  background-color: var(--code-bg-color);
-  color: var(--code-text-color);
-  width: max-content;
-  min-width: 50%;
-  padding: 1rem;
-}
-
-th,
-td {
-  text-align: left;
-  vertical-align: top;
-  white-space: nowrap;
-  padding: 0.15em 1.5em 0.15em 0.3em;
-}
-
-th {
-  color: var(--light-color);
-  border-bottom: 1px solid var(--border-color);
-}
-
-tbody tr:hover {
-  background: var(--middle-color);
-}
-
-ul:hover a.selected span {
-  background: transparent;
-  color: var(--light-color);
-}
-
-a:focus span,
-li:hover a.selected span {
-  background: var(--light-color);
-  color: var(--bg-color);
-}
-
-td:has(a):hover a span {
-  background: var(--light-color);
-  color: var(--bg-color);
+@media (prefers-color-scheme: light) {
+  pre {
+    background: #fff9dd;
+    color: #545464;
+  }
+  .Operator,
+  .-keyword-operator {
+    color: #836f4a;
+  }
+  .-string-regexp,
+  .Number {
+    color: #b35b79;
+  }
+  .-keyword-return {
+    color: #c84053;
+  }
+  .Keyword,
+  .-constructor-lua {
+    color: #624c83;
+  }
+  .Constant,
+  .Boolean {
+    color: #cc6d00;
+  }
+  .-punctuation-delimiter,
+  .-punctuation-bracket {
+    color: #4e8ca2;
+  }
+  .Identifier,
+  .-variable-member {
+    color: #77713f;
+  }
+  .String,
+  code,
+  kbd,
+  samp {
+    color: #6f894e;
+  }
+  .Function {
+    color: #4d699b;
+  }
+  .Special {
+    color: #6693bf;
+  }
+  .-variable-parameter {
+    color: #5d57a3;
+  }
 }

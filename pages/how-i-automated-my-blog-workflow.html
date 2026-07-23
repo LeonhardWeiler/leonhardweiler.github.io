@@ -9,6 +9,28 @@
     />
     <link rel="stylesheet" href="../common.css" />
     <title>How I Automated My Blog Workflow</title>
+    <style>
+      body {
+      .-variable {color: #c5c9c5}
+      .Operator {color: #c4746e}
+      .-string-regexp {color: #c4746e}
+      .Number {color: #a292a3}
+      .-keyword-return {color: #c4746e; font-style: italic}
+      .Keyword {color: #8992a7; font-style: italic}
+      .-constructor-lua {color: #8992a7}
+      .Constant {color: #b6927b}
+      .-_method {}
+      .-punctuation-delimiter {color: #9e9b93}
+      .Function {color: #8ba4b0; font-style: italic}
+      .Boolean {color: #b6927b; font-weight: bold}
+      .Identifier {color: #c4b28a}
+      .String {color: #8a9a7b}
+      .-punctuation-bracket {color: #9e9b93}
+      .Special {color: #949fb5}
+      .-keyword-operator {color: #c4746e; font-weight: bold}
+      .-variable-member {color: #c4b28a}
+      .-variable-parameter {color: #a6a69c}
+    </style>
   </head>
   <body>
     <ul>
@@ -67,63 +89,66 @@
       entry:
     </p>
 
-    <pre><code> function M.new_text()
-  vim.ui.input({
-    prompt = "Title: ",
-  }, function(title)
-    if not title or title == "" then
-      return
-    end
+    <div class="overflow-wrapper">
+      <pre>
+<span class="Keyword">function</span> <span class="-variable"><span class="Constant">M</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">new_text</span></span></span><span class="-punctuation-bracket">(</span><span class="-punctuation-bracket">)</span>
+  <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">ui</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">input</span></span></span><span class="-punctuation-bracket">(</span><span class="-punctuation-bracket"><span class="-constructor-lua">{</span></span>
+    <span class="-variable"><span class="Identifier">prompt</span></span> <span class="Operator">=</span> <span class="String">&quot;Title: &quot;</span><span class="-punctuation-delimiter">,</span>
+  <span class="-punctuation-bracket"><span class="-constructor-lua">}</span></span><span class="-punctuation-delimiter">,</span> <span class="Keyword">function</span><span class="-punctuation-bracket">(</span><span class="-variable"><span class="-variable-parameter">title</span></span><span class="-punctuation-bracket">)</span>
+    <span class="Keyword">if</span> <span class="Operator"><span class="-keyword-operator">not</span></span> <span class="-variable">title</span> <span class="Operator"><span class="-keyword-operator">or</span></span> <span class="-variable">title</span> <span class="Operator">==</span> <span class="String">&quot;&quot;</span> <span class="Keyword">then</span>
+      <span class="-keyword-return">return</span>
+    <span class="Keyword">end</span>
 
-    local slug = slugify(title)
-    local filename = slug .. ".html"
-    local filepath = pages .. "/" .. filename
-    local date = os.date("%Y-%m-%d")
+    <span class="Keyword">local</span> <span class="-variable">slug</span> <span class="Operator">=</span> <span class="-variable"><span class="Function">slugify</span></span><span class="-punctuation-bracket">(</span><span class="-variable">title</span><span class="-punctuation-bracket">)</span>
+    <span class="Keyword">local</span> <span class="-variable">filename</span> <span class="Operator">=</span> <span class="-variable">slug</span> <span class="Operator">..</span> <span class="String">&quot;.html&quot;</span>
+    <span class="Keyword">local</span> <span class="-variable">filepath</span> <span class="Operator">=</span> <span class="-variable">pages</span> <span class="Operator">..</span> <span class="String">&quot;/&quot;</span> <span class="Operator">..</span> <span class="-variable">filename</span>
+    <span class="Keyword">local</span> <span class="-variable">date</span> <span class="Operator">=</span> <span class="-variable"><span class="Special">os</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">date</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;%Y-%m-%d&quot;</span><span class="-punctuation-bracket">)</span>
 
-    if vim.fn.filereadable(filepath) == 1 then
-      print("File already exists.")
-      return
-    end
+    <span class="Keyword">if</span> <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">filereadable</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">filepath</span><span class="-punctuation-bracket">)</span> <span class="Operator">==</span> <span class="Number">1</span> <span class="Keyword">then</span>
+      <span class="-variable"><span class="Function"><span class="Special">print</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;File already exists.&quot;</span><span class="-punctuation-bracket">)</span>
+      <span class="-keyword-return">return</span>
+    <span class="Keyword">end</span>
 
-    local lines = vim.fn.readfile(template)
+    <span class="Keyword">local</span> <span class="-variable">lines</span> <span class="Operator">=</span> <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">readfile</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">template</span><span class="-punctuation-bracket">)</span>
 
-    for i, line in ipairs(lines) do
-      line = line:gsub("{{TITLE}}", title)
-      lines[i] = line
-    end
+    <span class="Keyword">for</span> <span class="-variable">i</span><span class="-punctuation-delimiter">,</span> <span class="-variable">line</span> <span class="Keyword">in</span> <span class="-variable"><span class="Function"><span class="Special">ipairs</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">lines</span><span class="-punctuation-bracket">)</span> <span class="Keyword">do</span>
+      <span class="-variable">line</span> <span class="Operator">=</span> <span class="-variable">line</span><span class="-punctuation-delimiter">:</span><span class="-variable"><span class="Function"><span class="-_method">gsub</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;<span class="-string-regexp">{{TITLE}}</span>&quot;</span><span class="-punctuation-delimiter">,</span> <span class="-variable">title</span><span class="-punctuation-bracket">)</span>
+      <span class="-variable">lines</span><span class="-punctuation-bracket">[</span><span class="-variable">i</span><span class="-punctuation-bracket">]</span> <span class="Operator">=</span> <span class="-variable">line</span>
+    <span class="Keyword">end</span>
 
-    vim.fn.writefile(lines, filepath)
+    <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">writefile</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">lines</span><span class="-punctuation-delimiter">,</span> <span class="-variable">filepath</span><span class="-punctuation-bracket">)</span>
 
-    local html = vim.fn.readfile(texts)
+    <span class="Keyword">local</span> <span class="-variable">html</span> <span class="Operator">=</span> <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">readfile</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">texts</span><span class="-punctuation-bracket">)</span>
 
-    local row = {
-      "        <tr>",
-      "          <td>",
-      '            <a href="./pages/' .. filename .. '">',
-      "              " .. title,
-      "            </a>",
-      "          </td>",
-      '          <td class="shrink">' .. date .. "</td>",
-      '          <td class="shrink">' .. date .. "</td>",
-      "        </tr>",
-    }
+    <span class="Keyword">local</span> <span class="-variable">row</span> <span class="Operator">=</span> <span class="-punctuation-bracket"><span class="-constructor-lua">{</span></span>
+      <span class="String">&quot;        &lt;tr&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">&quot;          &lt;td&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">'            &lt;a href=&quot;./pages/'</span> <span class="Operator">..</span> <span class="-variable">filename</span> <span class="Operator">..</span> <span class="String">'&quot;&gt;'</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">&quot;              &quot;</span> <span class="Operator">..</span> <span class="-variable">title</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">&quot;            &lt;/a&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">&quot;          &lt;/td&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">'          &lt;td class=&quot;shrink&quot;&gt;'</span> <span class="Operator">..</span> <span class="-variable">date</span> <span class="Operator">..</span> <span class="String">&quot;&lt;/td&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">'          &lt;td class=&quot;shrink&quot;&gt;'</span> <span class="Operator">..</span> <span class="-variable">date</span> <span class="Operator">..</span> <span class="String">&quot;&lt;/td&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+      <span class="String">&quot;        &lt;/tr&gt;&quot;</span><span class="-punctuation-delimiter">,</span>
+    <span class="-punctuation-bracket"><span class="-constructor-lua">}</span></span>
 
-    for i, line in ipairs(html) do
-      if line:find("<tbody>") then
-        for j = #row, 1, -1 do
-          table.insert(html, i + 1, row[j])
-        end
-        break
-      end
-    end
+    <span class="Keyword">for</span> <span class="-variable">i</span><span class="-punctuation-delimiter">,</span> <span class="-variable">line</span> <span class="Keyword">in</span> <span class="-variable"><span class="Function"><span class="Special">ipairs</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">html</span><span class="-punctuation-bracket">)</span> <span class="Keyword">do</span>
+      <span class="Keyword">if</span> <span class="-variable">line</span><span class="-punctuation-delimiter">:</span><span class="-variable"><span class="Function"><span class="-_method">find</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;<span class="-string-regexp">&lt;tbody&gt;</span>&quot;</span><span class="-punctuation-bracket">)</span> <span class="Keyword">then</span>
+        <span class="Keyword">for</span> <span class="-variable">j</span> <span class="Operator">=</span> <span class="Operator">#</span><span class="-variable">row</span><span class="-punctuation-delimiter">,</span> <span class="Number">1</span><span class="-punctuation-delimiter">,</span> <span class="Operator">-</span><span class="Number">1</span> <span class="Keyword">do</span>
+          <span class="-variable"><span class="Special">table</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">insert</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">html</span><span class="-punctuation-delimiter">,</span> <span class="-variable">i</span> <span class="Operator">+</span> <span class="Number">1</span><span class="-punctuation-delimiter">,</span> <span class="-variable">row</span><span class="-punctuation-bracket">[</span><span class="-variable">j</span><span class="-punctuation-bracket">]</span><span class="-punctuation-bracket">)</span>
+        <span class="Keyword">end</span>
+        <span class="Keyword">break</span>
+      <span class="Keyword">end</span>
+    <span class="Keyword">end</span>
 
-    vim.fn.writefile(html, texts)
+    <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">writefile</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">html</span><span class="-punctuation-delimiter">,</span> <span class="-variable">texts</span><span class="-punctuation-bracket">)</span>
 
-    vim.cmd("edit " .. filepath)
+    <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">cmd</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;edit &quot;</span> <span class="Operator">..</span> <span class="-variable">filepath</span><span class="-punctuation-bracket">)</span>
 
-    print("Created " .. filename)
-  end)
-end</code></pre>
+    <span class="-variable"><span class="Function"><span class="Special">print</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;Created &quot;</span> <span class="Operator">..</span> <span class="-variable">filename</span><span class="-punctuation-bracket">)</span>
+  <span class="Keyword">end</span><span class="-punctuation-bracket">)</span>
+<span class="Keyword">end</span></pre>
+    </div>
 
     <p>
       After creating that I restartet neovim and created my first text page like
@@ -131,42 +156,45 @@ end</code></pre>
       have a date for created and edited and I also wanted to create a function
       for updating the edited date, so I did that:
     </p>
-    <pre><code>function M.update_edited()
-  local filepath = vim.fn.expand("%:p")
+    <div class="overflow-wrapper">
+      <pre>
+<span class="Keyword">function</span> <span class="-variable"><span class="Constant">M</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">update_edited</span></span></span><span class="-punctuation-bracket">(</span><span class="-punctuation-bracket">)</span>
+  <span class="Keyword">local</span> <span class="-variable">filepath</span> <span class="Operator">=</span> <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">expand</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;%:p&quot;</span><span class="-punctuation-bracket">)</span>
 
-  if not filepath:find("/pages/") then
-    return
-  end
+  <span class="Keyword">if</span> <span class="Operator"><span class="-keyword-operator">not</span></span> <span class="-variable">filepath</span><span class="-punctuation-delimiter">:</span><span class="-variable"><span class="Function"><span class="-_method">find</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;<span class="-string-regexp">/pages/</span>&quot;</span><span class="-punctuation-bracket">)</span> <span class="Keyword">then</span>
+    <span class="-keyword-return">return</span>
+  <span class="Keyword">end</span>
 
-  local filename = vim.fn.expand("%:t")
-  local date = os.date("%Y-%m-%d")
+  <span class="Keyword">local</span> <span class="-variable">filename</span> <span class="Operator">=</span> <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">expand</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;%:t&quot;</span><span class="-punctuation-bracket">)</span>
+  <span class="Keyword">local</span> <span class="-variable">date</span> <span class="Operator">=</span> <span class="-variable"><span class="Special">os</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">date</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;%Y-%m-%d&quot;</span><span class="-punctuation-bracket">)</span>
 
-  local html = vim.fn.readfile(texts)
+  <span class="Keyword">local</span> <span class="-variable">html</span> <span class="Operator">=</span> <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">readfile</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">texts</span><span class="-punctuation-bracket">)</span>
 
-  local found = false
+  <span class="Keyword">local</span> <span class="-variable">found</span> <span class="Operator">=</span> <span class="Boolean">false</span>
 
-  for i, line in ipairs(html) do
-    if line:find("./pages/" .. filename, 1, true) then
-      found = true
+  <span class="Keyword">for</span> <span class="-variable">i</span><span class="-punctuation-delimiter">,</span> <span class="-variable">line</span> <span class="Keyword">in</span> <span class="-variable"><span class="Function"><span class="Special">ipairs</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">html</span><span class="-punctuation-bracket">)</span> <span class="Keyword">do</span>
+    <span class="Keyword">if</span> <span class="-variable">line</span><span class="-punctuation-delimiter">:</span><span class="-variable"><span class="Function">find</span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;./pages/&quot;</span> <span class="Operator">..</span> <span class="-variable">filename</span><span class="-punctuation-delimiter">,</span> <span class="Number">1</span><span class="-punctuation-delimiter">,</span> <span class="Boolean">true</span><span class="-punctuation-bracket">)</span> <span class="Keyword">then</span>
+      <span class="-variable">found</span> <span class="Operator">=</span> <span class="Boolean">true</span>
 
-      for j = i, math.min(i + 10, #html) do
-        if html[j]:find('<td class="shrink">') then
-          if html[j + 1] and html[j + 1]:find('<td class="shrink">') then
-            html[j + 1] = '          <td class="shrink">' .. date .. "</td>"
-            break
-          end
-        end
-      end
+      <span class="Keyword">for</span> <span class="-variable">j</span> <span class="Operator">=</span> <span class="-variable">i</span><span class="-punctuation-delimiter">,</span> <span class="-variable"><span class="Special">math</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">min</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">i</span> <span class="Operator">+</span> <span class="Number">10</span><span class="-punctuation-delimiter">,</span> <span class="Operator">#</span><span class="-variable">html</span><span class="-punctuation-bracket">)</span> <span class="Keyword">do</span>
+        <span class="Keyword">if</span> <span class="-variable">html</span><span class="-punctuation-bracket">[</span><span class="-variable">j</span><span class="-punctuation-bracket">]</span><span class="-punctuation-delimiter">:</span><span class="-variable"><span class="Function"><span class="-_method">find</span></span></span><span class="-punctuation-bracket">(</span><span class="String">'<span class="-string-regexp">&lt;td class=&quot;shrink&quot;&gt;</span>'</span><span class="-punctuation-bracket">)</span> <span class="Keyword">then</span>
+          <span class="Keyword">if</span> <span class="-variable">html</span><span class="-punctuation-bracket">[</span><span class="-variable">j</span> <span class="Operator">+</span> <span class="Number">1</span><span class="-punctuation-bracket">]</span> <span class="Operator"><span class="-keyword-operator">and</span></span> <span class="-variable">html</span><span class="-punctuation-bracket">[</span><span class="-variable">j</span> <span class="Operator">+</span> <span class="Number">1</span><span class="-punctuation-bracket">]</span><span class="-punctuation-delimiter">:</span><span class="-variable"><span class="Function"><span class="-_method">find</span></span></span><span class="-punctuation-bracket">(</span><span class="String">'<span class="-string-regexp">&lt;td class=&quot;shrink&quot;&gt;</span>'</span><span class="-punctuation-bracket">)</span> <span class="Keyword">then</span>
+            <span class="-variable">html</span><span class="-punctuation-bracket">[</span><span class="-variable">j</span> <span class="Operator">+</span> <span class="Number">1</span><span class="-punctuation-bracket">]</span> <span class="Operator">=</span> <span class="String">'          &lt;td class=&quot;shrink&quot;&gt;'</span> <span class="Operator">..</span> <span class="-variable">date</span> <span class="Operator">..</span> <span class="String">&quot;&lt;/td&gt;&quot;</span>
+            <span class="Keyword">break</span>
+          <span class="Keyword">end</span>
+        <span class="Keyword">end</span>
+      <span class="Keyword">end</span>
 
-      break
-    end
-  end
+      <span class="Keyword">break</span>
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span>
 
-  if found then
-    vim.fn.writefile(html, texts)
-    print("Updated edited date")
-  end
-end</code></pre>
+  <span class="Keyword">if</span> <span class="-variable">found</span> <span class="Keyword">then</span>
+    <span class="-variable">vim</span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member">fn</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">writefile</span></span></span><span class="-punctuation-bracket">(</span><span class="-variable">html</span><span class="-punctuation-delimiter">,</span> <span class="-variable">texts</span><span class="-punctuation-bracket">)</span>
+    <span class="-variable"><span class="Function"><span class="Special">print</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;Updated edited date&quot;</span><span class="-punctuation-bracket">)</span>
+  <span class="Keyword">end</span>
+<span class="Keyword">end</span></pre>
+    </div>
 
     <p>
       The whole code can be found in my

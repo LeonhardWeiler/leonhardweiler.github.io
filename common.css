@@ -65,8 +65,10 @@ ol {
   padding-left: 2rem;
 }
 
-.mark {
+mark {
   font-weight: 900;
+  background-color: inherit;
+  color: inherit;
 }
 
 .shrink {

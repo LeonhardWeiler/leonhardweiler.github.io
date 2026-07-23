@@ -17,15 +17,37 @@
       <li><a href="../git.html">repositories</a></li>
     </ul>
 
-    <!-- <div class="note"> -->
-    <!--   <p>tl;dr</p> -->
-    <!--   <ol> -->
-    <!--     <li></li> -->
-    <!--   </ol> -->
-    <!-- </div> -->
+    <div class="note">
+      <p>tl;dr</p>
+      <ol>
+        <li>Writing my neovim function to create new pages.</li>
+        <li>
+          Creates a new page with boilerplate html from the
+          <code>texts.html</code> table.
+        </li>
+      </ol>
+    </div>
 
     <h1>How I Automated My Blog Workflow</h1>
-    <p>Still in the process of beeing made ...</p>
+    <p>
+      I wanted to keep my personal website in my own complete control and didn't
+      want to rely on any static site generator to do the work for me. After
+      only creating the first 5 pages, I've noticed how useful one might be.
+      That's the reason I'm somewhat building my own.
+    </p>
+    <p>
+      My current setup works through a texts.html file where a list of all the
+      texts I wrote is stored in a table with hyperlinks to the specific ones.
+      The texts are stored in the directory <code>pages/</code>.
+    </p>
+    <p>
+      The idea is simple. I use neovim for editing all my files and in neovim
+      you're able to create your own functions. I only want to add a new entry
+      to the <code>texts.html</code> table, run a neovim function and the file
+      with boilerplate html should get created. This seems fairly simple.
+    </p>
+    <p>The first thing I did was creating such a boilerplate html file.</p>
+    <p>In progress ...</p>
 
     <div class="note">
       <p>Further reading:</p>

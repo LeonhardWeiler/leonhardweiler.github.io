@@ -1,12 +1,9 @@
 :root {
-  --bg-color: #111;
   --text-color: #888;
-  --heading-color: #eee;
-  --hover-color: #222;
+  --light-color: #eee;
+  --dark-color: #111;
+  --middle-color: #222;
   --border-color: #444;
-  --link-color: #eee;
-  --selection-bg: #eee;
-  --selection-color: #111;
 }
 
 *,
@@ -22,7 +19,7 @@
 }
 
 body {
-  background: var(--bg-color);
+  background: var(--dark-color);
   color: var(--text-color);
   font: 1rem / 1.5 monospace;
   padding: 2em;
@@ -33,7 +30,12 @@ h2,
 h3,
 h4 {
   margin-block: 0.5rem;
-  color: var(--heading-color);
+  color: var(--light-color);
+}
+
+code {
+  background-color: var(--middle-color);
+  padding: 0.2em;
 }
 
 p {
@@ -42,7 +44,7 @@ p {
 }
 
 a {
-  color: var(--link-color);
+  color: var(--light-color);
   text-decoration: none;
 }
 
@@ -52,7 +54,7 @@ ul > li {
 
 .note {
   padding-left: 1rem;
-  border-left: 1px solid var(--text-color);
+  border-left: 1px solid var(--border-color);
   margin-block: 1rem;
 }
 
@@ -71,14 +73,14 @@ ol {
 a:hover,
 a:focus,
 .selected {
-  background: var(--selection-bg);
-  color: var(--selection-color);
+  background: var(--light-color);
+  color: var(--dark-color);
   outline: none;
 }
 
 ::selection {
-  background: var(--selection-bg);
-  color: var(--selection-color);
+  background: var(--light-color);
+  color: var(--dark-color);
 }
 
 table {
@@ -95,10 +97,10 @@ td {
 }
 
 th {
-  color: var(--heading-color);
+  color: var(--light-color);
   border-bottom: 1px solid var(--border-color);
 }
 
 tbody tr:hover {
-  background: var(--hover-color);
+  background: var(--middle-color);
 }

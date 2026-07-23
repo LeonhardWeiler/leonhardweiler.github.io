@@ -1,10 +1,149 @@
-:root {
-  --text-color: #888;
-  --light-color: #eee;
-  --dark-color: #111;
-  --middle-color: #222;
-  --border-color: #444;
-  --overflow-select-color: #223249;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #888;
+    --light-color: #eee;
+    --bg-color: #111;
+    --middle-color: #222;
+    --border-color: #444;
+    --overflow-select-color: #223249;
+    --select-color: #a7a7a7;
+
+    --code-bg-color: #181616;
+    --code-text-color: #c5c9c5;
+    --variable-color: #c5c9c5;
+    --operator-color: #c4746e;
+    --string-regexp-color: #c4746e;
+    --number-color: #a292a3;
+    --keyword-return-color: #c4746e;
+    --keyword-color: #8992a7;
+    --constructor-lua-color: #8992a7;
+    --constant-color: #b6927b;
+    --punctuation-delimiter-color: #9e9b93;
+    --function-color: #8ba4b0;
+    --boolean-color: #b6927b;
+    --identifier-color: #c4b28a;
+    --string-color: #8a9a7b;
+    --punctuation-bracket-color: #9e9b93;
+    --special-color: #949fb5;
+    --keyword-operator-color: #c4746e;
+    --variable-member-color: #c4b28a;
+    --variable-parameter-color: #a6a69c;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text-color: #545464;
+    --light-color: #111;
+    --bg-color: #f2ecbc;
+    --middle-color: #e6dfb8;
+    --border-color: #b8b08a;
+    --overflow-select-color: #d7dbe5;
+    --select-color: #a7a7a7;
+
+    --code-bg-color: #fff9dd;
+    --code-text-color: #545464;
+    --variable-color: #545464;
+    --operator-color: #836f4a;
+    --string-regexp-color: #b35b79;
+    --number-color: #b35b79;
+    --keyword-return-color: #c84053;
+    --keyword-color: #624c83;
+    --constructor-lua-color: #624c83;
+    --constant-color: #cc6d00;
+    --punctuation-delimiter-color: #4e8ca2;
+    --function-color: #4d699b;
+    --boolean-color: #cc6d00;
+    --identifier-color: #77713f;
+    --string-color: #6f894e;
+    --punctuation-bracket-color: #4e8ca2;
+    --special-color: #6693bf;
+    --keyword-operator-color: #836f4a;
+    --variable-member-color: #77713f;
+    --variable-parameter-color: #5d57a3;
+  }
+
+  p a {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+  }
+}
+
+.-variable {
+  color: var(--variable-color);
+}
+
+.Operator {
+  color: var(--operator-color);
+}
+
+.-string-regexp {
+  color: var(--string-regexp-color);
+}
+
+.Number {
+  color: var(--number-color);
+}
+
+.-keyword-return {
+  color: var(--keyword-return-color);
+  font-style: italic;
+}
+
+.Keyword {
+  color: var(--keyword-color);
+  font-style: italic;
+}
+
+.-constructor-lua {
+  color: var(--constructor-lua-color);
+}
+
+.Constant {
+  color: var(--constant-color);
+}
+
+.-punctuation-delimiter {
+  color: var(--punctuation-delimiter-color);
+}
+
+.Function {
+  color: var(--function-color);
+  font-style: italic;
+}
+
+.Boolean {
+  color: var(--boolean-color);
+  font-weight: bold;
+}
+
+.Identifier {
+  color: var(--identifier-color);
+}
+
+.String {
+  color: var(--string-color);
+}
+
+.-punctuation-bracket {
+  color: var(--punctuation-bracket-color);
+}
+
+.Special {
+  color: var(--special-color);
+}
+
+.-keyword-operator {
+  color: var(--keyword-operator-color);
+  font-weight: bold;
+}
+
+.-variable-member {
+  color: var(--variable-member-color);
+}
+
+.-variable-parameter {
+  color: var(--variable-parameter-color);
 }
 
 *,
@@ -32,7 +171,7 @@ table,
 }
 
 body {
-  background: var(--dark-color);
+  background: var(--bg-color);
   color: var(--text-color);
   font: 1rem / 1.5 monospace;
   padding: 2em;
@@ -59,6 +198,7 @@ samp {
   background-color: var(--middle-color);
   padding: 0.2em;
   white-space: nowrap;
+  color: var(--string-color);
 }
 
 p {
@@ -97,18 +237,23 @@ a:hover,
 a:focus,
 .selected {
   background: var(--light-color);
-  color: var(--dark-color);
+  color: var(--bg-color);
   outline: none;
+
+  &::after {
+    color: var(--border-color);
+  }
 }
 
 ::selection {
-  background: var(--light-color);
-  color: var(--dark-color);
+  background: var(--select-color);
+  color: var(--bg-color);
 }
 
-.overflow-wrapper:has(pre) *::selection {
+.overflow-wrapper:has(pre) *::selection,
+code::selection {
   background-color: var(--overflow-select-color) !important;
-  color: inherit;
+  color: inherit !important;
 }
 
 .overflow-wrapper {
@@ -122,7 +267,8 @@ table {
 }
 
 pre {
-  background-color: var(--middle-color);
+  background-color: var(--code-bg-color);
+  color: var(--code-text-color);
   width: max-content;
   min-width: 50%;
   padding: 1rem;

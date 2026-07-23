@@ -1,34 +1,32 @@
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #888;
-    --light-color: #eee;
-    --bg-color: #111;
-    --middle-color: #222;
-    --border-color: #444;
-    --overflow-select-color: #223249;
-    --select-color: #a7a7a7;
+:root {
+  --text-color: #888;
+  --light-color: #eee;
+  --bg-color: #111;
+  --middle-color: #222;
+  --border-color: #444;
+  --overflow-select-color: #223249;
+  --select-color: #a7a7a7;
 
-    --code-bg-color: #181616;
-    --code-text-color: #c5c9c5;
-    --variable-color: #c5c9c5;
-    --operator-color: #c4746e;
-    --string-regexp-color: #c4746e;
-    --number-color: #a292a3;
-    --keyword-return-color: #c4746e;
-    --keyword-color: #8992a7;
-    --constructor-lua-color: #8992a7;
-    --constant-color: #b6927b;
-    --punctuation-delimiter-color: #9e9b93;
-    --function-color: #8ba4b0;
-    --boolean-color: #b6927b;
-    --identifier-color: #c4b28a;
-    --string-color: #8a9a7b;
-    --punctuation-bracket-color: #9e9b93;
-    --special-color: #949fb5;
-    --keyword-operator-color: #c4746e;
-    --variable-member-color: #c4b28a;
-    --variable-parameter-color: #a6a69c;
-  }
+  --code-bg-color: #181616;
+  --code-text-color: #c5c9c5;
+  --variable-color: #c5c9c5;
+  --operator-color: #c4746e;
+  --string-regexp-color: #c4746e;
+  --number-color: #a292a3;
+  --keyword-return-color: #c4746e;
+  --keyword-color: #8992a7;
+  --constructor-lua-color: #8992a7;
+  --constant-color: #b6927b;
+  --punctuation-delimiter-color: #9e9b93;
+  --function-color: #8ba4b0;
+  --boolean-color: #b6927b;
+  --identifier-color: #c4b28a;
+  --string-color: #8a9a7b;
+  --punctuation-bracket-color: #9e9b93;
+  --special-color: #949fb5;
+  --keyword-operator-color: #c4746e;
+  --variable-member-color: #c4b28a;
+  --variable-parameter-color: #a6a69c;
 }
 
 @media (prefers-color-scheme: light) {
@@ -209,7 +207,7 @@ samp {
 }
 
 p {
-  line-height: 1.1lh;
+  line-height: 1.65rem;
   width: min(50ch, 100%);
 }
 
@@ -249,7 +247,6 @@ mark {
 }
 
 li:hover a span,
-li:focus a span,
 .selected span {
   background: var(--light-color);
   color: var(--bg-color);
@@ -289,10 +286,6 @@ td {
   text-align: left;
   vertical-align: top;
   white-space: nowrap;
-}
-
-th > *,
-td > * {
   padding: 0.15em 1.5em 0.15em 0.3em;
 }
 

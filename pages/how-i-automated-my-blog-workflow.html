@@ -42,51 +42,57 @@
     <div class="note">
       <p>tl;dr</p>
       <ol>
-        <li>Writing my neovim function to create new pages.</li>
+        <li>I wrote a Neovim function to create new pages automatically.</li>
         <li>
-          Creates a new page with boilerplate html from the
+          It creates a new HTML page from a template and adds it to my
           <code>texts.html</code> table.
         </li>
-        <li>Writing a new neovim function to update the edited date.</li>
+        <li>
+          I wrote another Neovim function to automatically update the edited
+          date.
+        </li>
       </ol>
     </div>
 
     <h1>How I Automated My Blog Workflow</h1>
     <p>
-      I wanted to keep my personal website in my own complete control and didn't
-      want to rely on any static site generator to do the work for me. After
-      only creating the first 5 pages, I've noticed how useful one might be.
-      That's the reason I'm somewhat building my own.
+      I wanted to keep my personal website completely under my own control. I
+      did not want to depend on a static site generator to handle the structure
+      and content for me. After creating only five pages manually, however, I
+      started noticing how useful some automation could be. That is why I
+      decided to build a small system of my own.
     </p>
     <p>
-      My current setup works through a texts.html file where a list of all the
-      texts I wrote is stored in a table with hyperlinks to the specific ones.
-      The texts are stored in the directory <code>pages/</code>.
+      My current setup is based around a <code>texts.html</code> file, which
+      contains a table listing all the texts I have written. Each entry links to
+      a separate page stored inside the pages/ directory.
     </p>
     <p>
-      The idea is simple. I use neovim for editing all my files and in neovim
-      you're able to create your own functions. I want to run a function in
-      neovim (<code>:NewText</code>) which prompts me to put in a name for a
-      title. It creates a file, fills it and creates an entry in the texts table
-      on its own. This seems fairly simple.
+      The idea is simple: since I already use Neovim to edit all my files, I
+      wanted to create a custom command that would handle the repetitive parts
+      of creating a new article. Running <code>:NewText</code> should ask me for
+      a title, create a new HTML file, fill it with the required boilerplate,
+      and automatically add it to my texts table.
     </p>
     <p>
-      The first thing I did was creating such a boilerplate html file. I create
-      a new folder <code>templates/</code> and put the boilerplate as
-      <code>text.html</code> inside of it.
+      To make this work, I first created a template HTML file. I created a new
+      directory called <code>templates/</code> and added the basic structure of
+      a text page as <code>text.html</code>.
     </p>
     <p>
-      Then I created a new <code>blog.lua</code> file in my
-      <code>lua/config/</code> directory in neovim and included it into my
+      After that, I created a new <code>blog.lua</code> file inside my Neovim
+      configuration directory (<code>lua/config/</code>) and loaded it from
       <code>lua/config/lazy.lua</code>:
     </p>
 
-    <code> require("config.blog") </code>
+    <div class="overflow-wrappeer">
+      <pre><span class="-variable"><span class="Function"><span class="Special">require</span></span></span><span class="-punctuation-bracket">(</span><span class="String">&quot;config.blog&quot;</span><span class="-punctuation-bracket">)</span></pre>
+    </div>
 
     <p>
-      Then I added a <code>new_text()</code> function that reads the date and
-      asks the user for a title and then creates the text file and the table
-      entry:
+      The next step was creating the <code>new_text()</code> function. It gets
+      the current date, asks for the title, creates the new file, replaces the
+      placeholders in the template, and inserts a new entry into the text table.
     </p>
 
     <div class="overflow-wrapper">
@@ -151,11 +157,19 @@
     </div>
 
     <p>
-      After creating that I restartet neovim and created my first text page like
-      that, but there was still something I wanted to do. In my text table I
-      have a date for created and edited and I also wanted to create a function
-      for updating the edited date, so I did that:
+      After creating this function, I restarted Neovim and created my first page
+      using the new command. It worked, but there was still one thing missing.
     </p>
+
+    <p>
+      My text table stores both the creation date and the last edited date.
+      While the creation date is added automatically when creating a page, I
+      also wanted the edited date to update whenever I changed an existing
+      article.
+    </p>
+
+    <p>So I created another function for that:</p>
+
     <div class="overflow-wrapper">
       <pre>
 <span class="Keyword">function</span> <span class="-variable"><span class="Constant">M</span></span><span class="-punctuation-delimiter">.</span><span class="-variable"><span class="-variable-member"><span class="Function">update_edited</span></span></span><span class="-punctuation-bracket">(</span><span class="-punctuation-bracket">)</span>
@@ -197,19 +211,30 @@
     </div>
 
     <p>
-      The whole code can be found in my
-      <a id="link-1" href="#footnote-1">dotfiles repository</a> if you want to
-      check it out or have improvement suggestions. That is it for now and I
-      hope it will work for the next time. If it doesn't I'll make a follow up
-      :)
+      The function checks whether the current file is inside the
+      <code>pages/</code> directory. If it is, it searches for the matching
+      entry in <code>texts.html</code> and replaces the old edited date with the
+      current date.
     </p>
 
     <p>
-      For transparency, I wrote this post myself and then asked
-      <a id="link-2" href="#footnote-2">ChatGPT</a> to correct grammatical
-      mistakes and improve the overall reading experience, as English is not my
-      first language. The source code is nearly 100% written by
-      <a id="link-3" href="#footnote-3">ChatGPT</a>
+      The complete code can be found in my
+      <a id="link-1" href="#footnote-1">dotfiles repository</a> if you want to
+      take a look or suggest improvements.
+    </p>
+
+    <p>
+      That is it for now. I hope this little system continues to work well as I
+      write more pages. If it breaks or I find a better approach, I will
+      probably write a follow-up.
+    </p>
+
+    <p>
+      For transparency: I wrote this post myself and then used
+      <a href="#footnote-2" id="link-2">ChatGPT</a> to correct grammatical
+      mistakes and improve the overall reading experience, since English is not
+      my first language. The source code, however, was almost entirely written
+      with the help of <a href="#footnote-3" id="link-3">ChatGPT</a>.
     </p>
 
     <div class="note">
@@ -240,7 +265,12 @@
       </li>
       <li>
         <a href="#link-2">[2]</a>
-        <a id="footnote-2" target="_blank" rel="noopener noreferrer" href="">
+        <a
+          id="footnote-2"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://chatgpt.com/s/t_6a61eb60eac881919958bfd90e048b59"
+        >
           Improving this text (ChatGPT)
         </a>
       </li>

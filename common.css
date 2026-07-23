@@ -209,6 +209,7 @@ p {
 a {
   color: var(--light-color);
   text-decoration: none;
+  outline: none;
 }
 
 ul > li {
@@ -244,8 +245,6 @@ li:focus a span,
 .selected span {
   background: var(--light-color);
   color: var(--bg-color);
-  outline: none;
-  text-decoration: none;
 
   &::after {
     color: var(--border-color);
@@ -306,4 +305,11 @@ ul:hover a.selected span {
 li:hover a.selected span {
   background: var(--light-color);
   color: var(--bg-color);
+}
+
+a:hover:not(:has(span)),
+a:focus:not(:has(span)) {
+  background: var(--light-color);
+  color: var(--bg-color);
+  text-decoration: none;
 }

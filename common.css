@@ -64,6 +64,13 @@
   }
 }
 
+a:not(:has(span)):hover,
+a:not(:has(span)):focus {
+  background: var(--light-color);
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
 p a {
   text-decoration: underline;
   text-decoration-style: wavy;

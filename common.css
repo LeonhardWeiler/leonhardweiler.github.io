@@ -44,7 +44,8 @@ h4 {
 
 p {
   line-height: 1.65rem;
-  width: min(50ch, 100%);
+  width: min(55ch, 100%);
+  text-align: justify;
 }
 
 a {

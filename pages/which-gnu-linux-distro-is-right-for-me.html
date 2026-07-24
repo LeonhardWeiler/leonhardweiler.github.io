@@ -67,42 +67,43 @@
       <p>tl;dr</p>
       <ol>
         <li>
-          The 7 needs and wants from a distro should be followed if possible
+          The 7 needs and wants for a distro should be followed if possible.
         </li>
         <li>
-          One of the <a href="#distro-table">no glibc</a> ones probably fits it
-          well as discussed <a href="#summary">here</a>.
+          One of the <a href="#distro-table">no glibc</a> distros probably fits
+          my needs well, as discussed <a href="#summary">here</a>.
         </li>
       </ol>
     </div>
 
     <p>
       I want to improve my laptop. That doesn't always mean adding new features
-      (mostly it doesn't) and it also doesn't mean to use the newest, flashiest
-      or most elegant solution there is. Sometimes it just means to use the
-      simplest tools you need and nothing more.
+      (in fact, it usually doesn't), and it also doesn't mean using the newest,
+      flashiest, or most elegant solution available. Sometimes it simply means
+      using the simplest tools that are needed and nothing more.
     </p>
 
     <p>
-      I know for a fact, that I don't meet that criterea right now and thats the
-      reason I want to improve it. So lets start by examaning what currently
-      lies infront of my feat.
+      I know for a fact that I don't meet that criteria right now, and that's
+      the reason I want to improve it. So let's start by examining what
+      currently lies in front of me.
     </p>
 
     <p>
-      My operating system GNU/Linux I'm using is
+      The GNU/Linux operating system I'm currently using is
       <a href="#footnote-arch" id="link-arch">Arch Linux</a>. It's the only
-      distro I've really used daily and I've never had a problem with it. The
-      reason I chose it as my first distro, is because it seemed hard, I liked
-      the minimalism, the newest packages and learning something about
-      GNU/Linux.
+      distro I've really used daily, and I've never had a problem with it. The
+      reason I chose it as my first distro was because it seemed difficult, I
+      liked its minimalism, I wanted the newest packages, and I wanted to learn
+      more about GNU/Linux.
     </p>
 
     <p>
-      But times have changed. Now I wouldn't see Arch as a minimal distro per
-      se, I wouldn't say it's hard and it already did it's job of teaching me
-      GNU/Linux. The step is a new one to a new level of distros. Some that come
-      to mind for many are:
+      But times have changed. Nowadays, I wouldn't consider Arch a minimal
+      distro by itself (even though it can be one), I wouldn't say it is
+      particularly difficult anymore, and it has already fulfilled its purpose
+      of teaching me about GNU/Linux. The next step is moving towards a
+      different level of distros. Some that come to mind are:
     </p>
 
     <div id="distro-table" style="max-width: 1000px" class="overflow-wrapper">
@@ -214,105 +215,133 @@
     </div>
 
     <p>
-      I split all the distros I was able to find (that where actively maintained
-      and somewhat in line with my goals) into one of three categories:
-      minimalist, source-based and different. The "different" category contains
-      all the distros that aren't minimalist by design or philosophy and not
-      source-based. If you know a distro not listed, but appropriate for this
-      list open a pull request. I'd be happy to learn about it.
+      I split all the distros I was able to find (that are actively maintained
+      and somewhat aligned with my goals) into one of three categories:
+      minimalist, source-based, and different. The "different" category contains
+      all distros that are neither minimalist by design or philosophy nor
+      source-based. If you know of a distro that is not listed but would be
+      appropriate for this list, feel free to open a pull request. I'd be happy
+      to learn about it.
     </p>
 
     <p>
-      As you may see, for all of them (excep NixOS) you have the option to run
-      it without <a href="#footnote-systemd" id="link-systemd">systemd</a> and
-      for most you have the option to use another c library than
-      <a href="#footnote-glibc" id="link-glibc">glibc</a>. I haven't tried most
-      of them yet, but this somewhat serves as a list for what i'd like to have
-      a look at in the future.
+      As you may notice, for all of them (except NixOS) there is the option to
+      run without <a href="#footnote-systemd" id="link-systemd">systemd</a>, and
+      for most of them there is also the option to use a different C library
+      than <a href="#footnote-glibc" id="link-glibc">glibc</a>. I haven't tried
+      most of them yet, but this list also serves as a collection of distros I'd
+      like to explore in the future.
     </p>
 
     <p>
-      To understand which of them I find more interesting than others I first
-      have to talk about my needs and wants from a linux distro.
+      To understand which of them interest me more than others, I first have to
+      explain my needs and wants from a Linux distro.
     </p>
 
-    <h2>The distro needs to only run / compile what I tell it to</h2>
+    <h2>The distro should only run and compile what I tell it to</h2>
+
     <p>
-      By that I mean, that I can change compiler flags and everything else that
-      comes with a source based distro I prefer it generally over a binary
-      distro.
+      By this, I mean that I should be able to change compiler flags and control
+      everything else that comes with a source-based distro. In general, I
+      prefer this approach over a binary-based distro.
     </p>
 
     <h2>
       The distro should be minimal and understandable by design (do one thing
-      and to it well)
+      and do it well)
     </h2>
+
     <p>
-      The regular <a href="#footnote-suckless" id="link-suckless">suckless</a>
-      and Unix philosophy also applies here. In particular I mean, that I can
-      understand the whole system without there being a black box. For that to
-      be possible the distro can't be to complex and should be kept minimal and
-      split up in to many small parts. As far as I know Crux and KISS are doing
-      a good job in maintaining that.
+      The regular
+      <a href="#footnote-suckless" id="link-suckless">suckless</a> and Unix
+      philosophies also apply here. In particular, I mean that I should be able
+      to understand the entire system without there being a black box. For that
+      to be possible, the distro cannot be overly complex and should be kept
+      minimal, with the system split into many small, understandable parts.
+      Everyone should be able to maintain the distro. As far as I know, Crux and
+      KISS Linux do a good job of maintaining this philosophy.
     </p>
 
     <h2>The distro should be hackable</h2>
+
     <p>
-      The perfekt world here is of course LFS, but it doesn't need to be it to
-      have similar possiblities. The requirments should be that I can change the
-      init system, coreutils, bootloader, desktop environment, etc. It should
-      not get into my way and stop me from doing something, even if it can break
-      things or if it's hard to pull of.
+      The perfect world here would, of course, be LFS, but a distro does not
+      need to be LFS to provide similar possibilities. The requirements should
+      be that I can change the init system, coreutils, bootloader, desktop
+      environment, etc. The distro should not get in my way or prevent me from
+      doing something just because it could break things or because it is
+      difficult to implement.
     </p>
 
-    <h2>The distro should enforce strict rules (that I've defined)</h2>
+    <h2>The distro should enforce strict rules (that I have defined)</h2>
+
     <p>
-      NixOS is a distro that enforces probably the strongest rules, but they are
-      distro and not user defined. The perfekt thing would be NixOS where I can
-      still hack around things I specifically want to do and disable the
-      "safeguards".
+      NixOS is a distro that enforces some of the strongest rules, but those
+      rules are defined by the distro itself rather than by the user. The
+      perfect solution would be something like NixOS, where I can still work
+      around those rules when I specifically want to and disable the safeguards
+      when necessary.
     </p>
 
-    <h2>The distro should be reinstallable in reasonable time</h2>
+    <h2>The distro should be reinstallable in a reasonable amount of time</h2>
+
     <p>
-      LFS is not installable on a new laptop in a reasonable amount of time.
-      Gentoo probably isn't either, but by far not that bad. NixOS is probably
-      one of the fastest, because all of its config is decleratively defined.
-      NuTyX, Venom and Exherbo are probably also good at this.
+      LFS is not installable on a new laptop within a reasonable amount of time.
+      Gentoo probably isn't either, although it is by far not as time-consuming.
+      NixOS is probably one of the fastest, because its entire configuration can
+      be defined declaratively. NuTyX, Venom, and Exherbo are probably also good
+      in this regard.
     </p>
 
     <h2>
       The maintainers should be able to say no (staying true to their
       philosophy)
     </h2>
+
     <p>
-      If a new shiny technology appears or a new feature is suggested, they
-      should be able to say no in favor of the distro and its minimalism. That
-      also means having good quality control and a lot of testing to ensure that
-      the project will last.
+      If a new shiny technology appears or a new feature is suggested, the
+      maintainers should be able to say no in favor of the distro's philosophy
+      and minimalism. This also means having good quality control and enough
+      testing to ensure that the project remains stable and sustainable.
     </p>
 
     <h2>The packages should be up to date</h2>
+
     <p>
-      There should be a balence between git main and out of date. As far as I
-      know T2 Linux does a very good job in maintining package
+      There should be a balance between being on the bleeding edge and being
+      outdated. As far as I know, T2 Linux does a very good job of maintaining
+      package
       <a href="#footnote-repology" id="link-repology">up-to-dateness</a>.
     </p>
 
     <h2>What will I use now?</h2>
+
     <p>
-      To be fair I don't know yet. All the interesting one have the option to be
-      used without glibc. NixOS or the unmarked distros are probably not the
-      ones I'll use in the future. I also won't daily drive LFS, because of the
-      time required to set everything up and probably also not Adelie, because
-      after more then 10 years it's still in beta.
+      To be fair, I don't know yet. All the interesting ones have the option to
+      be used without glibc. NixOS and the unmarked distros are probably not the
+      ones I'll choose in the future. I also won't daily drive LFS because of
+      the time required to set everything up, and probably not Adelie either,
+      because after more than 10 years it is still in beta.
     </p>
 
     <p id="summary">
-      From all the other one especially Gentoo, Crux, KISS Linux, Exherbo and
-      Chimera Linux seem interesting. I don't know what exactly I'll choose, but
-      it's very likely to be one of them. If you have any suggestion or usage
-      experience with any of them I'd be very thankful for sharing that with me.
+      Of all the remaining options, Gentoo, Crux, KISS Linux, Exherbo, and
+      Chimera Linux seem especially interesting. I don't know exactly which one
+      I'll choose, but it is very likely to be one of them. If you have any
+      suggestions or personal experience using any of them, I'd be very thankful
+      if you shared it with me.
+    </p>
+
+    <p>
+      For transparency: I wrote this post myself and then used
+      <a href="#footnote-text-improvements" id="link-text-improvements"
+        >ChatGPT</a
+      >
+      to correct grammatical mistakes and improve the overall reading
+      experience, since English is not my first language. The sources for the
+      <a href="#distro-table">table</a> were also partially researched with the
+      help of ChatGPT and
+      <a id="link-claude" href="#footnote-claude"></a> Claude Sonnet 4.6.
     </p>
 
     <ul class="footnotes">
@@ -567,6 +596,35 @@
           href="https://repology.org/repositories/statistics/pnewest"
         >
           Repology statistics (repology.org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-text-improvements">[24]</a>
+        <a
+          id="footnote-text-improvements"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://chatgpt.com/s/t_6a637673427c81919e0e8707af5a4449"
+        >
+          ChatGPT text improvements (chatgpt.com)
+        </a>
+      </li>
+      <li>
+        <a href="#link-claude">[25]</a>
+        <a
+          id="footnote-claude"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://claude.ai/share/418c9433-c5d3-4f95-991f-46fb8a7adedf"
+        >
+          Claude chat Adelie & Alpine (claude.ai)</a
+        >
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://claude.ai/share/36e7a78e-3656-49f1-b182-5b2dea465cef"
+        >
+          Claude chat Exherbo (claude.ai)
         </a>
       </li>
     </ul>

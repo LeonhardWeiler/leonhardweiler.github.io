@@ -49,7 +49,11 @@ h4,
 p,
 li,
 a {
-  max-width: 60ch;
+  max-width: 580px;
+}
+
+li {
+  max-width: 525px;
 }
 
 p {

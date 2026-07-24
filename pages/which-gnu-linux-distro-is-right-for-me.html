@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Blog post discussing which GNU/Linux distro I want to use in the future"
+    />
+    <link rel="icon" href="../favicon.svg" />
+    <link rel="stylesheet" href="../common.css" />
+    <title>Which GNU/Linux Distro Is Right For Me?</title>
+    <style>
+      .flex {
+        display: flex;
+        column-gap: 1rem;
+        flex-wrap: wrap;
+
+        p {
+          color: var(--light-color);
+          padding-inline: 1rem;
+          width: max-content;
+        }
+      }
+
+      .systemd,
+      .no-glibc {
+        border-left: 3px solid var(--accent);
+        background: color-mix(in srgb, var(--accent) 20%, transparent);
+      }
+
+      .systemd {
+        --accent: #ff6b7d;
+      }
+      .no-glibc {
+        --accent: #b892ff;
+      }
+
+      @media (prefers-color-scheme: light) {
+        .systemd {
+          --accent: #e01b3c;
+        }
+        .no-glibc {
+          --accent: #7a3fd6;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="../index.html"><span>about</span></a>
+        </li>
+        <li>
+          <a href="../texts.html"><span>texts</span></a>
+        </li>
+        <li>
+          <a href="../git.html"><span>repositories</span></a>
+        </li>
+      </ul>
+    </nav>
+
+    <h1>Which GNU/Linux Distro Is Right For Me?</h1>
+
+    <div class="note">
+      <p>tl;dr</p>
+      <ol>
+        <li>
+          The 7 needs and wants from a distro should be followed if possible
+        </li>
+        <li>
+          One of the <a href="#distro-table">no glibc</a> ones probably fits it
+          well as discussed <a href="#summary">here</a>.
+        </li>
+      </ol>
+    </div>
+
+    <p>
+      I want to improve my laptop. That doesn't always mean adding new features
+      (mostly it doesn't) and it also doesn't mean to use the newest, flashiest
+      or most elegant solution there is. Sometimes it just means to use the
+      simplest tools you need and nothing more.
+    </p>
+
+    <p>
+      I know for a fact, that I don't meet that criterea right now and thats the
+      reason I want to improve it. So lets start by examaning what currently
+      lies infront of my feat.
+    </p>
+
+    <p>
+      My operating system GNU/Linux I'm using is
+      <a href="#footnote-arch" id="link-arch">Arch Linux</a>. It's the only
+      distro I've really used daily and I've never had a problem with it. The
+      reason I chose it as my first distro, is because it seemed hard, I liked
+      the minimalism, the newest packages and learning something about
+      GNU/Linux.
+    </p>
+
+    <p>
+      But times have changed. Now I wouldn't see Arch as a minimal distro per
+      se, I wouldn't say it's hard and it already did it's job of teaching me
+      GNU/Linux. The step is a new one to a new level of distros. Some that come
+      to mind for many are:
+    </p>
+
+    <div id="distro-table" style="max-width: 1000px" class="overflow-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>minimalist</th>
+            <th>source-based</th>
+            <th>different</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="no-glibc">
+              <a id="link-adelie" href="#footnote-adelie"
+                ><span>Adelie Linux</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a
+                href="https://www.exherbo.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Exherbo</span></a
+              >
+            </td>
+            <td class="systemd">
+              <a
+                href="https://nixos.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>NixOS</span></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="no-glibc">
+              <a
+                href="https://alpinelinux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Alpine</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a
+                href="https://www.gentoo.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Gentoo</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a
+                href="https://chimera-linux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Chimera Linux</span></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="no-glibc">
+              <a
+                href="https://crux.nu"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>CRUX</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a
+                href="https://kisscommunity.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>KISS Linux (community)</span></a
+              >
+            </td>
+            <td>
+              <a
+                href="https://artixlinux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Artix</span></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="no-glibc">
+              <a
+                href="https://voidlinux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Void</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a
+                href="https://www.linuxfromscratch.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>LFS</span></a
+              >
+            </td>
+            <td>
+              <a
+                href="https://bedrocklinux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Bedrock Linux</span></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="https://nutyx.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>NuTyX</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a
+                href="https://t2sde.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>T2 SDE</span></a
+              >
+            </td>
+            <td>
+              <a
+                href="https://guix.gnu.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>GNU Guix</span></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <a
+                href="https://venomlinux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Venom Linux</span></a
+              >
+            </td>
+            <td>
+              <a
+                href="https://gobolinux.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>GoboLinux</span></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <a
+                href="https://obarun.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><span>Obarun</span></a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex">
+      <p class="systemd">systemd neccesary</p>
+      <p class="no-glibc">No glibc</p>
+    </div>
+
+    <p>
+      I split all the distros I was able to find (that where actively maintained
+      and somewhat in line with my goals) into one of three categories:
+      minimalist, source-based and different. The "different" category contains
+      all the distros that aren't minimalist by design or philosophy and not
+      source-based. If you know a distro not listed, but appropriate for this
+      list open a pull request. I'd be happy to learn about it.
+    </p>
+
+    <p>
+      As you may see, for all of them (excep NixOS) you have the option to run
+      it without <a href="#footnote-systemd" id="link-systemd">systemd</a> and
+      for most you have the option to use another c library than
+      <a href="foontnote-glibc" id="link-glibc">glibc</a>. I haven't tried most
+      of them yet, but this somewhat serves as a list for what i'd like to have
+      a look at in the future.
+    </p>
+
+    <p>
+      To understand which of them I find more interesting than others I first
+      have to talk about my needs and wants from a linux distro.
+    </p>
+
+    <h2>The distro needs to only run / compile what I tell it to</h2>
+    <p>
+      By that I mean, that I can change compiler flags and everything else that
+      comes with a source based distro I prefer it generally over a binary
+      distro.
+    </p>
+
+    <h2>
+      The distro should be minimal and understandable by design (do one thing
+      and to it well)
+    </h2>
+    <p>
+      The regular <a href="#footnote-suckless" id="link-suckless">suckless</a>
+      and Unix philosophy also applies here. In particular I mean, that I can
+      understand the whole system without there being a black box. For that to
+      be possible the distro can't be to complex and should be kept minimal and
+      split up in to many small parts. As far as I know Crux and KISS are doing
+      a good job in maintaining that.
+    </p>
+
+    <h2>The distro should be hackable</h2>
+    <p>
+      The perfekt world here is of course LFS, but it doesn't need to be it to
+      have similar possiblities. The requirments should be that I can change the
+      init system, coreutils, bootloader, desktop environment, etc. It should
+      not get into my way and stop me from doing something, even if it can break
+      things or if it's hard to pull of.
+    </p>
+
+    <h2>The distro should enforce strict rules (that I've defined)</h2>
+    <p>
+      NixOS is a distro that enforces probably the strongest rules, but they are
+      distro and not user defined. The perfekt thing would be NixOS where I can
+      still hack around things I specifically want to do and disable the
+      "safeguards".
+    </p>
+
+    <h2>The distro should be reinstallable in reasonable time</h2>
+    <p>
+      LFS is not installable on a new laptop in a reasonable amount of time.
+      Gentoo probably isn't either, but by far not that bad. NixOS is probably
+      one of the fastest, because all of its config is decleratively defined.
+      NuTyX, Venom and Exherbo are probably also good at this.
+    </p>
+
+    <h2>
+      The maintainers should be able to say no (staying true to their
+      philosophy)
+    </h2>
+    <p>
+      If a new shiny technology appears or a new feature is suggested, they
+      should be able to say no in favor of the distro and its minimalism. That
+      also means having good quality control and a lot of testing to ensure that
+      the project will last.
+    </p>
+
+    <h2>The packages should be up to date</h2>
+    <p>
+      There should be a balence between git main and out of date. As far as I
+      know T2 Linux does a very good job in maintining package
+      <a href="#footnote-repology" id="link-repology">up-to-dateness</a>.
+    </p>
+
+    <h2>What will I use now?</h2>
+    <p>
+      To be fair I don't know yet. All the interesting one have the option to be
+      used without glibc. NixOS or the unmarked distros are probably not the
+      ones I'll use in the future. I also won't daily drive LFS, because of the
+      time required to set everything up and probably also not Adelie, because
+      after more then 10 years it's still in beta.
+    </p>
+
+    <p id="summary">
+      From all the other one especially Gentoo, Crux, KISS Linux, Exherbo and
+      Chimera Linux seem interesting. I don't know what exactly I'll choose, but
+      it's very likely to be one of them. If you have any suggestion or usage
+      experience with any of them I'd be very thankful for sharing that with me.
+    </p>
+
+    <ul class="footnotes">
+      <li>
+        <a href="#link-arch">[1]</a>
+        <a
+          id="footnote-arch"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="archlinux.org"
+        >
+          Arch Linux (archlinux[dot]org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-adelie">[2]</a>
+        <a
+          id="footnote-adelie"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://adelielinux.org"
+        >
+          Adelie Linux (adelielinux[dot]org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-systemd">[29]</a>
+        <a
+          id="footnote-systemd"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://systemd.io/"
+        >
+          Systemd (systemd[dot]io)
+        </a>
+      </li>
+      <li>
+        <a href="#link-glibc">[30]</a>
+        <a
+          id="footnote-glibc"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://sourceware.org/glibc/"
+        >
+          GNU C Library (sourceware[dot]org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-suckless">[31]</a>
+        <a
+          id="footnote-suckless"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://suckless.org/philosophy/"
+        >
+          Suckless Philosophy (suckless[dot]org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-repology">[32]</a>
+        <a
+          id="footnote-repology"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://repology.org/repositories/statistics/pnewest"
+        >
+          Repology statistics (repology[dot]org)
+        </a>
+      </li>
+    </ul>
+  </body>
+</html>

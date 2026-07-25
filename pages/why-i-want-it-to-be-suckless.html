@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Blog post about Why I want everything to be suckless"
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="../favicon.svg" />
+    <link rel="stylesheet" href="../common.css" />
+    <title>Why I want it to be suckless</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="../index.html"><span>about</span></a>
+        </li>
+        <li>
+          <a href="../texts.html"><span>texts</span></a>
+        </li>
+        <li>
+          <a href="../git.html"><span>repositories</span></a>
+        </li>
+      </ul>
+    </nav>
+
+    <h1>Why I want it to be suckless</h1>
+
+    <div class="note">
+      <p>tl;dr</p>
+      <ol>
+        <li>Suckless software does not mean a low system footprint.</li>
+        <li>Instead, it puts you, the user, on the throne.</li>
+        <li>
+          Even if you don't have anything to contribute, you should still care.
+        </li>
+      </ol>
+    </div>
+
+    <p>
+      One may ask why I want my operating system, browser, window manager,
+      terminal, etc. to be minimal, or, to be more precise, why I want my
+      software to be
+      <a href="#footnote-suckless" id="link-suckless">suckless</a>.
+    </p>
+
+    <p>
+      The Suckless philosophy page already does a good job of describing the
+      current problems as well as the overall goal, but I still want to address
+      a few things that are often misunderstood or brought up as arguments
+      against suckless or minimal software in general.
+    </p>
+
+    <p class="note">"We have powerful enough hardware in [current year]."</p>
+
+    <p>
+      This argument is often made when talking about minimal software that
+      deliberately leaves out certain features. The idea is that minimal
+      software may have made sense when computers only had 512 MB of RAM, but
+      today's computers have far more resources, so why not make use of them?
+    </p>
+
+    <p>
+      On the surface, I agree that we should make use of the resources our
+      systems provide, but there is more to it. First of all, minimal software
+      follows a different goal than software that primarily aims to reduce
+      system resource usage.
+      <a href="#footnote-alpine" id="link-alpine">Alpine Linux</a> is probably a
+      good example of a project that focuses on reducing resource usage but does
+      not follow a minimal or suckless philosophy. Alpine is often used on
+      servers or systems with limited resources, such as embedded devices, where
+      there is still a hard limit to how demanding software can be.
+    </p>
+
+    <p>
+      Suckless software thinks of <strong>you</strong>, the user, and aims to
+      make it <strong>your</strong> software. By that I mean that
+      <strong>you</strong> should be able to understand the complete source
+      code, contribute to the project, write your own patches, and so on.
+      Everyone is treated as a potential contributor. This implies that the code
+      has to be concise, free (as in freedom), of high quality, and hackable.
+      Striving for these goals comes with several positive side effects that are
+      often mistaken for the primary goals, even though they are merely
+      consequences:
+    </p>
+
+    <ol>
+      <li>Being more secure due to the smaller attack surface.</li>
+      <li>Having relatively low system resource usage.</li>
+      <li>Being easier to maintain.</li>
+      <li>...</li>
+    </ol>
+
+    <p>
+      But why should I even care about being able to change software to my own
+      liking? Why should I want to contribute to a project within a reasonable
+      amount of time and with reasonable effort? The following quote describes
+      the same idea in a different context, but it can be applied just as well
+      to suckless software.
+    </p>
+
+    <blockquote class="note">
+      <p>
+        "Arguing that you don't care about the right to privacy because you have
+        nothing to hide is no different than saying you don't care about free
+        speech because you have nothing to say."
+      </p>
+      <footer>— <cite>Edward Snowden</cite></footer>
+    </blockquote>
+
+    <p>
+      I think that quote says everything there is to say, and I hope you now
+      understand why suckless software is about more than just being minimal.
+    </p>
+
+    <p>
+      For transparency: I wrote this post myself and then used
+      <a href="#footnote-text-improvements" id="link-text-improvements"
+        >ChatGPT</a
+      >
+      to correct grammatical mistakes and improve the overall reading
+      experience, since English is not my first language.
+    </p>
+
+    <div class="note">
+      <p>Changelog</p>
+      <ul>
+        <li>2026-07-25 - [commit-hash]: Added this page</li>
+      </ul>
+    </div>
+
+    <ul class="footnotes">
+      <li>
+        <a href="#link-suckless">[1]</a>
+        <a
+          id="footnote-suckless"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://suckless.org/philosophy/"
+        >
+          Suckless Philosophy (suckless.org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-alpine">[2]</a>
+        <a
+          id="footnote-alpine"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.alpinelinux.org/"
+        >
+          Alpine Linux (alpinelinux.org)
+        </a>
+      </li>
+      <li>
+        <a href="#link-text-improvements">[3]</a>
+        <a
+          id="footnote-text-improvements"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://chatgpt.com/s/t_6a65395cfe78819184dab5166d11cb73"
+        >
+          ChatGPT text improvements (chatgpt.com)
+        </a>
+      </li>
+    </ul>
+  </body>
+</html>

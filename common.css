@@ -80,6 +80,10 @@ ul > li {
   list-style: none;
 }
 
+body > ol {
+  margin-top: 0.5rem;
+}
+
 ol {
   padding-left: 2rem;
 }

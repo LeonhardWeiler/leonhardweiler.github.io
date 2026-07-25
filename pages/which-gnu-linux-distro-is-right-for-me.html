@@ -106,20 +106,16 @@
       different level of distros. Some that come to mind are:
     </p>
 
-    <div id="distro-table" style="max-width: 1000px" class="overflow-wrapper">
+    <div id="distro-table" style="max-width: 580px" class="overflow-wrapper">
       <table>
         <thead>
           <tr>
-            <th>minimalist</th>
             <th>source-based</th>
-            <th>different</th>
+            <th>binary</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="no-glibc">
-              <a id="link-void" href="#footnote-void"><span>Void</span></a>
-            </td>
             <td class="no-glibc">
               <a id="link-crux" href="#footnote-crux"><span>CRUX</span></a>
             </td>
@@ -128,10 +124,19 @@
             </td>
           </tr>
           <tr>
-            <td></td>
             <td class="no-glibc">
               <a id="link-exherbo" href="#footnote-exherbo"
                 ><span>Exherbo</span></a
+              >
+            </td>
+            <td class="no-glibc">
+              <a id="link-void" href="#footnote-void"><span>Void</span></a>
+            </td>
+          </tr>
+          <tr>
+            <td class="no-glibc">
+              <a id="link-gentoo" href="#footnote-gentoo"
+                ><span>Gentoo</span></a
               >
             </td>
             <td>
@@ -139,10 +144,9 @@
             </td>
           </tr>
           <tr>
-            <td></td>
             <td class="no-glibc">
-              <a id="link-gentoo" href="#footnote-gentoo"
-                ><span>Gentoo</span></a
+              <a id="link-kiss" href="#footnote-kiss"
+                ><span>KISS Linux (community)</span></a
               >
             </td>
             <td>
@@ -150,11 +154,8 @@
             </td>
           </tr>
           <tr>
-            <td></td>
             <td class="no-glibc">
-              <a id="link-kiss" href="#footnote-kiss"
-                ><span>KISS Linux (community)</span></a
-              >
+              <a id="link-lfs" href="#footnote-lfs"><span>LFS</span></a>
             </td>
             <td>
               <a id="link-obarun" href="#footnote-obarun"
@@ -163,21 +164,12 @@
             </td>
           </tr>
           <tr>
-            <td></td>
-            <td class="no-glibc">
-              <a id="link-lfs" href="#footnote-lfs"><span>LFS</span></a>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
             <td class="no-glibc">
               <a id="link-t2sde" href="#footnote-t2sde"><span>T2 SDE</span></a>
             </td>
             <td></td>
           </tr>
           <tr>
-            <td></td>
             <td>
               <a id="link-venom" href="#footnote-venom"
                 ><span>Venom Linux</span></a
@@ -196,12 +188,10 @@
 
     <p>
       I split all the distros I was able to find (that are actively maintained
-      and somewhat aligned with my goals) into one of three categories:
-      minimalist, source-based, and different. The "different" category contains
-      all distros that are neither minimalist by design or philosophy nor
-      source-based. If you know of a distro that is not listed but would be
-      appropriate for this list, feel free to open a pull request. I'd be happy
-      to learn about it.
+      and somewhat aligned with my goals) into one of two categories:
+      source-based and binary. If you know of a distro that is not listed but
+      would be appropriate for this list, feel free to open a pull request. I'd
+      be happy to learn about it.
     </p>
 
     <p>
@@ -326,6 +316,10 @@
     <div class="note">
       <p>Changelog</p>
       <ul>
+        <li>
+          2026-07-25 - ebb672b: Alpine, NuTyX, Chimera, Bedrock and Gobo Linux
+          removed; CRUX moved to source-based; CHANGELOG added
+        </li>
         <li>2026-07-25 - 72b5bd3: Adelie removed</li>
         <li>2026-07-24 - c52c552: Fosdem 2009 Exherbo link added</li>
         <li>2026-07-24 - 28b3b17: CRUX capitalized everywhere</li>
